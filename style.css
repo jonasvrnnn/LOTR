@@ -1,0 +1,39 @@
+h1,
+h2,
+form,
+div {
+  text-align: center;
+  font-family: Georgia, "Palatino Lintotype", fantasy, serif;
+}
+
+div {
+  padding: 2px;
+}
+
+h1 {
+  text-transform: capitalize;
+}
+
+h2 {
+  background-color: #3e5c45;
+  color: bisque;
+  border-radius: 2rem;
+  margin: 1rem 10rem;
+  padding: 5px;
+  text-transform: uppercase;
+}
+
+button {
+  margin: 5% 37%;
+  padding: 10px 20px;
+  border-radius: 5rem;
+  background-color: #3e5c45;
+  color: bisque;
+  font-family: Georgia, "Palatino Lintotype", fantasy, serif;
+}
+
+#formPassword {
+  margin-left: 26px;
+}
+
+/* ik heb mijn best gedaan lol */
