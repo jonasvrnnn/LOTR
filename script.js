@@ -29,3 +29,9 @@ function emptyInput(e) {
 }
 
 //liever een melding of tekst dat verschijnt als textcontent?
+
+/*
+border rood maken als het vakje leeg blijft
+geen alerts
+nmbs
+*/
