@@ -1,4 +1,4 @@
-/*@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap'); /* Middeleeuws lettertype 
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap'); 
 
 body {
     font-family: 'Uncial Antiqua', serif;
@@ -91,9 +91,9 @@ input[type="text"]::placeholder {
 input[type="text"]:focus {
     background: radial-gradient(circle, #c9a857, #8a6b35);
     box-shadow: 0px 4px 0px #3b2f19, 0px 4px 10px rgba(0, 0, 0, 0.4);
-}*/
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap'); 
+/* @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap'); 
 
 body {
     font-family: 'Uncial Antiqua', serif;
@@ -187,4 +187,12 @@ input[type="text"]:focus {
     background: radial-gradient(circle, #8e8a7e, #515b5a); 
     box-shadow: 0px 4px 0px #515b5a, 0px 4px 10px rgba(0, 0, 0, 0.4);
 }
+ */
 
+
+ /*
+ rode knop
+ voor pauze
+ menu (drie puntjes) of pauze teken
+ script in een appart bestand
+ */
