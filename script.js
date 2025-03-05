@@ -1,16 +1,28 @@
 const inputUsername = document.getElementById("username");
 const inputPassword = document.getElementById("password");
-inputUsername.addEventListener("blur", myFunction);
+const warningUsername = document.getElementById("usernameAlert");
+const warningPassword = document.getElementById("passwordAlert");
+inputUsername.addEventListener("blur", usernameFunction);
+
 //lege gebruikersnaam
-function myFunction() {
+function usernameFunction() {
   if (inputUsername.value.trim() == "") {
-    alert("Gelieve uw gebruikersnaam in te vullen a.u.b");
+    warningUsername.textContent =
+      "Gelieve uw gebruikersnaam in te vullen a.u.b";
+    inputUsername.classList.add("input-error");
+  } else {
+    warningUsername.textContent = "";
+    inputUsername.classList.remove("input-error");
   }
 }
 inputPassword.addEventListener("blur", passwordFunction);
 function passwordFunction() {
   if (inputPassword.value.trim() == "") {
-    alert("Gelieve uw wachtwoord in te vullen a.u.b");
+    warningPassword.textContent = "Gelieve uw wachtwoord in te vullen a.u.b";
+    inputPassword.classList.add("input-error");
+  } else {
+    warningPassword.textContent = "";
+    inputPassword.classList.remove("input-error");
   }
 }
 
@@ -18,20 +30,12 @@ function passwordFunction() {
 const buttonLogin = document.getElementById("login");
 buttonLogin.addEventListener("click", emptyInput);
 function emptyInput(e) {
-  if (inputUsername.value.trim() == "" && inputPassword.value.trim() == "") {
-    e.preventDefault();
-    alert("Gebruikersnaam en wachtwoord zijn vereist.");
-  } else if (inputPassword.value.trim() == "") {
-    alert("Wachtwoord is vereist.");
-  } else if (inputUsername.value.trim() == "") {
-    alert("Gebruikersnaam is vereist.");
-  }
+  e.preventDefault();
+  usernameFunction();
+  passwordFunction();
 }
-
-//liever een melding of tekst dat verschijnt als textcontent?
 
 /*
 border rood maken als het vakje leeg blijft
-geen alerts
 nmbs
 */
