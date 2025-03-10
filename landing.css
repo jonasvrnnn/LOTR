@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap'); /* Middeleeuws lettertype */
+
+button {
+    background: radial-gradient(circle, #af8d4a, #705d32); /* Gouden gloed */
+    border: 3px solid #3b2f19; /* Donkerbruine rand */
+    color: #f4e3b2; /* Zacht gouden tekst */
+    font-size: 24px;
+    font-family: 'Uncial Antiqua', serif; /* Middeleeuws lettertype */
+    padding: 15px 50px;
+    border-radius: 30px; /* Zachte afgeronde hoeken */
+    text-transform: uppercase;
+    box-shadow: 0px 6px 0px #3b2f19, 0px 6px 12px rgba(0, 0, 0, 0.4); /* Diepte-effect */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: inline-block;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Magische gloed */
+}
+
+button:hover {
+    background: radial-gradient(circle, #c9a857, #8a6b35);
+    box-shadow: 0px 4px 0px #3b2f19, 0px 4px 10px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+}
+
+button:active {
+    background: #8a6b35;
+    box-shadow: 0px 2px 0px #3b2f19;
+    transform: translateY(4px);
+}
+
+
