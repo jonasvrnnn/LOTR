@@ -1,0 +1,57 @@
+
+body{
+    background-color: rgb(154, 129, 62);
+    height: 100vh;
+}
+.quiz{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 30px;
+    background-color: aliceblue;
+    width: 50%;
+    margin: auto;
+    margin-top: 5rem;
+    border-radius: 2rem;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+.quiz header{
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+.quiz header h1{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+    font-family: Arial, Helvetica, sans-serif;
+    border-bottom: 2px solid black;
+    padding-bottom: 1rem;
+}
+#buttons{
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+}
+.btn{
+    height: 7rem;
+    border-radius: 1rem;
+    border: 2px solid black;
+    cursor: pointer;
+}
+footer{
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.next{
+    border: 2px solid black;
+    text-align: center;
+    width: 4rem;
+    border-radius: 3rem;
+}
+.next:hover{
+    background-color: black;
+    color: aliceblue;
+    cursor: pointer;
+}
