@@ -29,10 +29,17 @@
     <button class="login-button" onclick="login()">Login</button>
     <div class="container">
         <div class="banner" id="banner">Selecteer een game</div>
+        <div class="arrow left-arrow" onclick="scrollProjects(-1)">&#10094;</div> 
         <div class="selection">
-            <div class="project" onclick="selectProject('Project 1')" style="background-image: url('images/project1.webp');"></div>
-            <div class="project" onclick="selectProject('Project 2')" style="background-image: url('images/projext.webp');"></div>
-            <div class="project" onclick="selectProject('Project 3')" style="background-image: url('images/project3.webp');"></div>
+            <div class="project" onclick="selectProject('Chronicles of Eldoria')" style="background-image: url('images/project1.webp');">
+                <div class="project-title">Chronicles of Eldoria</div>
+            </div>
+            <div class="project" onclick="selectProject('Lord of the Rings')" style="background-image: url('images/projext.webp');">
+                <div class="project-title">Lord of the Rings</div>
+            </div>
+            <div class="project" onclick="selectProject('Wizards of the Forgotten Realm')" style="background-image: url('images/project3.webp');">
+                <div class="project-title">Wizards of the Forgotten Realm</div>
+            </div>
         </div>
         <div class="arrow right-arrow" onclick="scrollProjects(1)">&#10095;</div>
     </div>
