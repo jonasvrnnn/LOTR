@@ -1,4 +1,3 @@
-
 const motivationalMessages = [
     "Je hebt de wijsheid van Gandalf! Goed gedaan 🧙‍♂️!",
     "Dat was een machtig antwoord, waardig voor een koning 👑!" ,
@@ -41,4 +40,17 @@ document.getElementById("submitAnswer").addEventListener("click", function() {
     }
   
     completeQuiz(); 
+
+
+document.getElementById("submitAnswer").addEventListener("click", function() {
+    if (!quizCompleted) {
+        showMotivationalMessage();  
+    }
+    completeQuiz();  
+});
+
+
+document.querySelector(".next").addEventListener("click", function() {
+});
+
 });
