@@ -9,12 +9,40 @@ const maxVragen = 10;
 const vraagElement = document.querySelector("h1");
 const antwoordKnoppen = document.querySelectorAll(".btn");
 const nextButton = document.querySelector(".next");
-let aangeduid = false;
 
+let geselecteerdeKnop = null;
+let juisteCharacterId = null;
+let checkMode = true;
+
+// Maak een container voor de knop en de melding
+const container = document.createElement("div");
+nextButton.parentNode.insertBefore(container, nextButton); // Plaats de container net voor de nextButton
+
+// Maak een aparte container voor de melding
+const meldingElement = document.createElement("div");
+meldingElement.style.fontWeight = "bold";
+meldingElement.style.transition = "opacity 0.3s"; // Zorg voor een mooie overgang als de melding verschijnt
+
+// Voeg de melding en de knop toe aan de container
+container.appendChild(nextButton);
+container.appendChild(meldingElement); // Voeg de melding toe in de container
+
+// CSS voor de container
+container.style.display = 'flex';
+container.style.flexDirection = 'column';
+container.style.alignItems = 'center';
+container.style.justifyContent = 'center';
+container.style.marginTop = '20px';
+
+// Zorg ervoor dat de melding ruimte krijgt zonder dat de knop verschuift
+meldingElement.style.minHeight = '30px';  // Zorgen dat er altijd ruimte is voor een melding
+meldingElement.style.marginTop = '10px';
+
+// API headers
 const headers = {
   'Accept': 'application/json',
   'Authorization': 'Bearer UCTCCx7EBG3IuHh7Cfst'
-}
+};
 
 const main = async () => {
   try {
@@ -40,7 +68,6 @@ function laadVraag() {
 
     let vraagInhoud;
 
-    // deze loop checked of er geen quote dubbel voorkomt in de quiz
     do {
       vraagInhoud = quotes[Math.floor(Math.random() * quotes.length)];
     } while (gebruikteQuotes.includes(vraagInhoud._id));
@@ -49,49 +76,79 @@ function laadVraag() {
 
     vraagElement.textContent = vraagInhoud.dialog;
 
+    juisteCharacterId = vraagInhoud.character;
+    const juisteCharacter = characters.find(c => c._id === juisteCharacterId);
 
-    const juisteCharacter = characters.find(c => c._id === vraagInhoud.character);
+    if (!juisteCharacter) {
+      console.error("Juiste character niet gevonden voor ID:", juisteCharacterId);
+      laadVraag(); // probeer een andere vraag als er iets misgaat
+      return;
+    }
 
-    // hier word een selectie gemaakt van character namen die niet overeen komen met de quote in de variabele vraaginhoud
     let fouteCharacters = characters
-      .filter(c => c._id !== vraagInhoud.character)
+      .filter(c => c._id !== juisteCharacterId)
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
 
-    // hier word er met de spread operator een array gemaakt van de 3 foute en 1 juist antwoord waarin de volgorde random wordt gesorteert
     let antwoorden = [...fouteCharacters, juisteCharacter].sort(() => 0.5 - Math.random());
 
-    // hier worden de antwoorden array toegewezen aan de textcontent van de knoppen
     antwoordKnoppen.forEach((knop, index) => {
       knop.textContent = antwoorden[index].name;
-      // bij elke click word er een event overschreven op elke knop
-      knop.onclick = function () {
-        controleerAntwoord(knop, antwoorden[index]._id, juisteCharacter._id);
-      };
 
+      // Reset click handlers
+      knop.onclick = () => selecteerAntwoord(knop, antwoorden[index]._id);
     });
 
-  } else {
+    // Zet de knop terug op "Check"
+    nextButton.textContent = "Check";
+    checkMode = true;
+    geselecteerdeKnop = null;
 
-    // Wanneer de 10 vragen voorbij zijn krijgt de gebruiker zijn totaalscore te zien
+  } else {
     vraagElement.textContent = `Quiz voltooid! Je score: ${score}/${maxVragen}`;
     antwoordKnoppen.forEach(knop => knop.style.display = "none");
     nextButton.style.display = "none";
+    meldingElement.textContent = ""; // Zorg ervoor dat er geen melding verschijnt als de quiz voltooid is
   }
 }
 
-// in deze functie worden de id's vergeleken met elkaar de als het overeen komt word deze knop groen. anders word deze rood en zal het juiste antwoord ook zichtbaar worden door deze een groene achtergrond te geven
-function controleerAntwoord(button, gekozenId, juisteId) {
-  const juisteCharacter = characters.find(c => c._id === juisteId);
+function selecteerAntwoord(button, gekozenId) {
+  geselecteerdeKnop = { button, gekozenId };
 
-  if (gekozenId === juisteId) {
-    button.style.backgroundColor = "green";
-    button.style.color = "white";
+  // Reset de stijl van alle knoppen
+  antwoordKnoppen.forEach(knop => {
+    knop.style.backgroundColor = "";
+    knop.style.color = "black";
+  });
+
+  // Geef de geselecteerde knop een grijze achtergrond
+  button.style.backgroundColor = "gray";
+  button.style.color = "white";
+}
+
+function controleerAntwoord() {
+  if (!geselecteerdeKnop) {
+    meldingElement.textContent = "Kies eerst een antwoord voordat je checkt!";
+    meldingElement.style.opacity = 1; // Toon melding
+    return;
+  }
+
+  // Disable knoppen zodat je niet meer kunt aanpassen na checken
+  antwoordKnoppen.forEach(knop => knop.disabled = true);
+
+  const gekozenId = geselecteerdeKnop.gekozenId;
+
+  if (gekozenId === juisteCharacterId) {
+    geselecteerdeKnop.button.style.backgroundColor = "green";
+    geselecteerdeKnop.button.style.color = "white";
     score++;
+    meldingElement.textContent = "Goed zo!";
+    meldingElement.style.opacity = 1; // Toon melding
   } else {
-    button.style.backgroundColor = "red";
-    button.style.color = "white";
+    geselecteerdeKnop.button.style.backgroundColor = "red";
+    geselecteerdeKnop.button.style.color = "white";
 
+    const juisteCharacter = characters.find(c => c._id === juisteCharacterId);
 
     antwoordKnoppen.forEach(knop => {
       if (knop.textContent === juisteCharacter.name) {
@@ -99,14 +156,12 @@ function controleerAntwoord(button, gekozenId, juisteId) {
         knop.style.color = "white";
       }
     });
-  }
 
-  aangeduid = true;
-  // nadat een knop is geselecteerd kan je niet opnieuw een knop induwen
-  antwoordKnoppen.forEach(knop => knop.disabled = true);
+    meldingElement.textContent = `Fout! Het juiste antwoord was: ${juisteCharacter.name}`;
+    meldingElement.style.opacity = 1; // Toon melding
+  }
 }
 
-// de reset functie word aangeroepen aan het begin van laad vraag, hier word alles terug default gezet. 
 function reset() {
   antwoordKnoppen.forEach(btn => {
     btn.style.backgroundColor = "";
@@ -114,16 +169,28 @@ function reset() {
     btn.disabled = false;
   });
 
-  aangeduid = false;
+  geselecteerdeKnop = null;
+  meldingElement.style.opacity = 0; // Verberg melding bij reset
 }
 
-// je kan enkel op de next button duwen als er een selectie is gemaakt.
 nextButton.addEventListener("click", () => {
-  if (aangeduid) {
+  if (checkMode) {
+    // Eerst checken
+    if (!geselecteerdeKnop) {
+      meldingElement.textContent = "Kies eerst een antwoord voordat je checkt!";
+      meldingElement.style.opacity = 1; // Toon melding
+      return;
+    }
+
+    controleerAntwoord();
+    nextButton.textContent = "Next";
+    checkMode = false;
+  } else {
+    // Dan volgende vraag
     huidigeVraagIndex++;
     laadVraag();
+    meldingElement.style.opacity = 0; // Verberg melding voor de volgende vraag
   }
 });
-
 
 main();
