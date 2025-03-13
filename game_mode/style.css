@@ -108,3 +108,8 @@ h1 {
     transform: translateX(5%) translateY(-5%);
   }
 }
+a {
+  /*automatische opmaak van a href wordt hier verwijderd*/
+  text-decoration: none;
+  color: inherit;
+}
