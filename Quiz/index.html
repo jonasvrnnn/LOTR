@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>10 rounds</title>
     <link rel="stylesheet" href="./style.css">
 </head>
     <body>
         
-    <h1>Welkom bij de Lord Of The Rings Quiz!</h1>
+    <h1>Welkom bij 10 rounds!</h1>
     <button id="startButton">Start de Quiz</button>
 
-    <section id="quizContainer">
-        <p id="quote">Hier komen de vragen...</p>
-        <input type="text" id="answer" placeholder="Jouw antwoord">
-        <button id="submitAnswer">Verstuur</button>
+    <section id="quizContainer" style="display: none;">
+        <header>
+            <h2 id="quote">Hier komt de vraag...</h2> 
+        </header>
+        <div id="buttons">
+            <button class="btn"></button>
+            <button class="btn"></button>
+            <button class="btn"></button>
+            <button class="btn"></button>
+        </div>
+        <button class="next">Volgende</button>
     </section>
 
     <section id="controlButtons" style="display: none; margin-top: 20px;">
@@ -33,6 +40,7 @@
     
     <div id="popupBackground"></div>
 
+    <script src="./quiz_functionaliteit_Jonas/script.js"></script>
      <section id="motivationalMessage"></section>
      <script src="./script.js"></script> 
      <script src="./audio.js"></script>

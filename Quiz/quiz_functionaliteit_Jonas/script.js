@@ -6,7 +6,7 @@ let score = 0;
 let huidigeVraagIndex = 0;
 const maxVragen = 10;
 
-const vraagElement = document.querySelector("h1");
+const vraagElement = document.querySelector("#quote");
 const antwoordKnoppen = document.querySelectorAll(".btn");
 const nextButton = document.querySelector(".next");
 let aangeduid = false;
@@ -86,17 +86,17 @@ function controleerAntwoord(button, gekozenId, juisteId) {
 
   if (gekozenId === juisteId) {
     button.style.backgroundColor = "green";
-    button.style.color = "white";
+    button.style.color = "green";
     score++;
   } else {
     button.style.backgroundColor = "red";
-    button.style.color = "white";
+    button.style.color = "red";
 
 
     antwoordKnoppen.forEach(knop => {
       if (knop.textContent === juisteCharacter.name) {
         knop.style.backgroundColor = "green";
-        knop.style.color = "white";
+        knop.style.color = "green";
       }
     });
   }
@@ -127,3 +127,5 @@ nextButton.addEventListener("click", () => {
 
 
 main();
+
+
