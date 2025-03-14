@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,16 @@
     <link rel="stylesheet" href="./style.css">
     <script defer src="script.js"></script>
 </head>
-<body>
-    
-    <h1>Welkom bij 10 rounds</h1>
-    <button id="startButton">Start de Quiz</button>
 
+<body>
+
+    <h1>Welkom bij 10 rounds</h1>
+    <button class="beginKnop" id="startButton">Start de Quiz</button>
+    <button onclick="window.location.href = '../../game_mode/index.html';" class="beginKnop" id="backToMenuButton">Terug
+        naar Menu</button>
     <section id="quizContainer" style="display: none;">
         <header>
-            <h2 id="quote">Hier komt de vraag...</h2> 
+            <h2 id="quote">Hier komt de vraag...</h2>
         </header>
         <div id="buttons">
             <button class="btn"></button>
@@ -38,7 +41,8 @@
         <button id="confirmButton">Ja</button>
         <button id="cancelButton">Nee</button>
     </article>
-    
+
     <div id="popupBackground" style="display: none;"></div>
 </body>
+
 </html>

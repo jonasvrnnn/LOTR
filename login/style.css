@@ -67,3 +67,20 @@ button:hover {
   font-size: 0.8rem;
   margin-top: 5px;
 }
+
+#backButton {
+  width: 50%;
+  padding: 10px;
+  border-radius: 5rem;
+  background-color: #3e5c45;
+  color: bisque;
+  font-family: Georgia, "Palatino Linotype", fantasy, serif;
+  cursor: pointer;
+  border: none;
+  margin-top: 10px;
+  /* Kleine marge om de knoppen van elkaar te scheiden */
+}
+
+#backButton:hover {
+  background-color: #2c4632;
+}

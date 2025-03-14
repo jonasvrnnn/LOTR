@@ -58,6 +58,7 @@ html, body {
 }
 
 .project {
+    cursor: pointer;
     position: relative;
     width: 260px;
     height: 240px;
@@ -148,6 +149,8 @@ het moet ook aan de linkerkant staan*/
 .right-arrow {
     right: -50px;
 }
+
+
 
 
 /* RESPONSIVE DESIGN */

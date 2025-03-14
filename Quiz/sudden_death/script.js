@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // === ELEMENTEN ===
   const startButton = document.getElementById("startButton");
+  const backToMenuButton = document.getElementById("backToMenuButton")
   const quizContainer = document.getElementById("quizContainer");
   const controlButtons = document.getElementById("controlButtons");
   const lotrAudio = document.getElementById("lotrAudio");
@@ -159,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
     geselecteerdeKnop = { button, gekozenId };
 
     antwoordKnoppen.forEach(knop => {
-      knop.style.backgroundColor = "";
+      knop.style.background = "";
       knop.style.color = "white";
     });
 
@@ -230,7 +231,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   startButton.addEventListener("click", function () {
     startButton.style.display = "none";
-    quizContainer.style.display = "block";
+    backToMenuButton.style.display = "none";
+    quizContainer.style.display = "block"
     controlButtons.style.display = "block";
     startAudio();
     laadVraag();

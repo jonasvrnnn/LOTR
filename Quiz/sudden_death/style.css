@@ -41,13 +41,13 @@ button {
     margin: 15px;
 }
 
-#startButton {
+.beginKnop {
     display: block;
     margin: 20px auto;
     background: linear-gradient(to bottom, #c3ccac, #8f9275);
     color: #292221;
 }
-#startButton:disabled{
+.beginKnop:disabled{
     cursor: wait;
     opacity: 0.5;
 }
@@ -231,6 +231,8 @@ button.wrong {
     font-weight: bold;  /* Maak de tekst dikgedrukt voor meer impact */
     
 }
+
+
 
 
 
