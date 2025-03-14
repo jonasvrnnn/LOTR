@@ -47,6 +47,10 @@ button {
     background: linear-gradient(to bottom, #c3ccac, #8f9275);
     color: #292221;
 }
+#startButton:disabled{
+    cursor: wait;
+    opacity: 0.5;
+}
 
 button:hover {
     transform: scale(1.08);
@@ -127,15 +131,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
-button.correct {
-    background-color: green;
-    color: white;
-}
 
-button.wrong {
-    background-color: red;
-    color: white;
-}
 
 #controlButtons {
     display: none;

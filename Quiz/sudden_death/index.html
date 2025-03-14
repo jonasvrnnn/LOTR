@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>10 rounds</title>
     <link rel="stylesheet" href="./style.css">
+    <script defer src="script.js"></script>
 </head>
-    <body>
-        
-    <h1>Welkom bij 10 rounds!</h1>
+<body>
+    
+    <h1>Welkom bij sudden death</h1>
     <button id="startButton">Start de Quiz</button>
 
     <section id="quizContainer" style="display: none;">
@@ -25,27 +26,21 @@
         <section id="motivationalMessage" style="margin-top: 20px;"></section>
     </section>
 
-
     <section id="controlButtons" style="display: none; margin-top: 20px;">
         <button id="pauseButton">Pauze</button>
         <button id="exitButton">Verlaten</button>
     </section>
 
-    <audio src="./Lord of the Rings   Sound of The Shire.mp3" 
-     autoplay loop ></audio>
+    <audio id="lotrAudio" src="./Lord of the Rings   Sound of The Shire.mp3" autoplay loop></audio>
 
-     <article id="popup">
+    <article id="popup" style="display: none;">
         <p id="popupMessage">Weet je zeker dat je de quiz wilt verlaten?</p>
         <button id="confirmButton">Ja</button>
         <button id="cancelButton">Nee</button>
     </article>
     
-    <div id="popupBackground"></div>
+    <div id="popupBackground" style="display: none;"></div>
 
-     <script src="./quiz_functionaliteit_Jonas/script.js"></script>
-     <script src="./script.js"></script> 
-     <script src="./audio.js"></script>
-     <script src="./thema_LOTR.js"></script>
-     <script src="./message.js"></script>
+     <!-- We voegen alles in dit script samen -->
 </body>
 </html>
