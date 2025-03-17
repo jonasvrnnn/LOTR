@@ -1,8 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap");
 
 body {
-  font-family: 'Uncial Antiqua', serif;
-  background: radial-gradient(circle, rgba(20, 20, 20, 1) 0%, rgba(41, 34, 33, 1) 50%, rgba(10, 10, 10, 1) 100%);
+  font-family: "Uncial Antiqua", serif;
+  background: radial-gradient(
+    circle,
+    rgba(20, 20, 20, 1) 0%,
+    rgba(41, 34, 33, 1) 50%,
+    rgba(10, 10, 10, 1) 100%
+  );
   color: #eeeed4;
   text-align: center;
   margin: 50px;
@@ -41,7 +46,7 @@ button {
   border: 3px solid #d3d1ae;
   color: #eeeed4;
   font-size: 22px;
-  font-family: 'Uncial Antiqua', serif;
+  font-family: "Uncial Antiqua", serif;
   padding: 15px 35px;
   border-radius: 40px;
   text-transform: uppercase;
@@ -59,7 +64,6 @@ button:hover {
 .input-error {
   border: 2px solid red;
 }
-
 
 button:active {
   transform: translateY(6px);
@@ -98,7 +102,6 @@ input {
   cursor: pointer;
   border: none;
   margin-top: 10px;
-  /* Kleine marge om de knoppen van elkaar te scheiden */
 }
 
 #backButton:hover {
