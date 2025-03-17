@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-  // === ELEMENTEN ===
+  // html elementen
   const startButton = document.getElementById("startButton");
-  const backToMenuButton = document.getElementById("backToMenuButton")
+  const backToMenuButton = document.getElementById("backToMenuButton");
   const quizContainer = document.getElementById("quizContainer");
   const controlButtons = document.getElementById("controlButtons");
   const lotrAudio = document.getElementById("lotrAudio");
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const nextButton = document.querySelector(".next");
   const motivationalSection = document.getElementById("motivationalMessage");
 
-  // === VARIABELEN ===
+  // Variabele
   const quotes = [];
   const characters = [];
   let gebruikteQuotes = [];
@@ -40,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "Dat was een legendarisch antwoord, waardig voor de Zaal van Gondor 🏰!",
     "Zelf Sauron zou niet kunnen ontkennen dat dit juist was 👁️!",
     "Bij het licht van Eärendil, jij bent echt slim 🌟!",
-    "Je hebt bewezen zo wijs te zijn als de elfen van Rivendel 🌿!"
+    "Je hebt bewezen zo wijs te zijn als de elfen van Rivendel 🌿!",
   ];
 
   const failMessages = [
@@ -53,22 +52,22 @@ document.addEventListener("DOMContentLoaded", function () {
     "Je vergat het advies van Gandalf! 📚",
     "Zelf een Hobbit zou dit weten... 🍃",
     "Sauron zag je fout en lacht vanuit Barad-dûr! 🔥",
-    "De Nazgûl naderen... Wees voorzichtig! 🐉"
+    "De Nazgûl naderen... Wees voorzichtig! 🐉",
   ];
 
   const headers = {
-    'Accept': 'application/json',
-    'Authorization': 'Bearer UCTCCx7EBG3IuHh7Cfst'
+    Accept: "application/json",
+    Authorization: "Bearer UCTCCx7EBG3IuHh7Cfst",
   };
 
-  // === AUDIO STARTEN ===
+  // audio starten bij opstarten van het spel
   function startAudio() {
-    lotrAudio.play().catch(error => {
+    lotrAudio.play().catch((error) => {
       console.log("Autoplay geblokkeerd, gebruiker moet handmatig starten.");
     });
   }
 
-  // === POPUPS ===
+  // popups
   function showPopup(message, confirmAction) {
     popupMessage.textContent = message;
     popup.style.display = "block";
@@ -89,9 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   pauseButton.addEventListener("click", function () {
-    showPopup("Weet je zeker dat je de quiz wilt pauzeren?", function () {
-      // Functionaliteit voor pauzeren kan hier toegevoegd worden.
-    });
+    showPopup("Weet je zeker dat je de quiz wilt pauzeren?");
   });
 
   exitButton.addEventListener("click", function () {
@@ -100,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // === MELDING TONEN ===
+  // melding tonen
   function toonMelding(tekst, kleur = "red") {
     motivationalSection.textContent = tekst;
     motivationalSection.style.display = "block";
@@ -117,10 +114,10 @@ document.addEventListener("DOMContentLoaded", function () {
     toonMelding(failMessages[randomIndex], "red");
   }
 
-  // === VRAAG LADEN ===
+  // vragen
   function laadVraag() {
     reset();
-    toonMelding(""); // Reset meldingen
+    toonMelding("");
     let vraagInhoud;
 
     do {
@@ -131,20 +128,25 @@ document.addEventListener("DOMContentLoaded", function () {
     vraagElement.textContent = vraagInhoud.dialog;
 
     juisteCharacterId = vraagInhoud.character;
-    const juisteCharacter = characters.find(c => c._id === juisteCharacterId);
+    const juisteCharacter = characters.find((c) => c._id === juisteCharacterId);
 
     if (!juisteCharacter) {
-      console.error("Juiste character niet gevonden voor ID:", juisteCharacterId);
+      console.error(
+        "Juiste character niet gevonden voor ID:",
+        juisteCharacterId
+      );
       laadVraag();
       return;
     }
 
     let fouteCharacters = characters
-      .filter(c => c._id !== juisteCharacterId)
+      .filter((c) => c._id !== juisteCharacterId)
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
 
-    let antwoorden = [...fouteCharacters, juisteCharacter].sort(() => 0.5 - Math.random());
+    let antwoorden = [...fouteCharacters, juisteCharacter].sort(
+      () => 0.5 - Math.random()
+    );
 
     antwoordKnoppen.forEach((knop, index) => {
       knop.textContent = antwoorden[index].name;
@@ -159,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function selecteerAntwoord(button, gekozenId) {
     geselecteerdeKnop = { button, gekozenId };
 
-    antwoordKnoppen.forEach(knop => {
+    antwoordKnoppen.forEach((knop) => {
       knop.style.background = "";
       knop.style.color = "white";
     });
@@ -174,22 +176,24 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    antwoordKnoppen.forEach(knop => knop.disabled = true);
+    antwoordKnoppen.forEach((knop) => (knop.disabled = true));
 
     const gekozenId = geselecteerdeKnop.gekozenId;
 
     if (gekozenId === juisteCharacterId) {
-      geselecteerdeKnop.button.style.background = "linear-gradient(to bottom, #2d8f2d, #1e691e)"; // Groen voor juist
+      geselecteerdeKnop.button.style.background =
+        "linear-gradient(to bottom, #2d8f2d, #1e691e)"; // Groen voor juist
       geselecteerdeKnop.button.style.color = "white"; // De tekstkleur wordt wit
       score++;
       nextButton.textContent = "Next";
       checkMode = false;
       showMotivationalMessage();
     } else {
+      const juisteCharacter = characters.find(
+        (c) => c._id === juisteCharacterId
+      );
 
-      const juisteCharacter = characters.find(c => c._id === juisteCharacterId);
-
-      antwoordKnoppen.forEach(knop => {
+      antwoordKnoppen.forEach((knop) => {
         if (knop.textContent === juisteCharacter.name) {
           knop.style.backgroundColor = "green";
           knop.style.color = "white";
@@ -197,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       vraagElement.textContent = `Game Over! Je eindscore is ${score}.`;
-      antwoordKnoppen.forEach(knop => knop.style.display = "none");
+      antwoordKnoppen.forEach((knop) => (knop.style.display = "none"));
       nextButton.style.display = "none";
 
       showFailMessage();
@@ -205,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function reset() {
-    antwoordKnoppen.forEach(btn => {
+    antwoordKnoppen.forEach((btn) => {
       btn.style.backgroundColor = "";
       btn.style.background = "";
       btn.style.color = "#eeeed4";
@@ -216,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
     geselecteerdeKnop = null;
   }
 
-  // === BUTTON EVENTS ===
+  // eventListener
   nextButton.addEventListener("click", () => {
     if (checkMode) {
       if (!geselecteerdeKnop) {
@@ -232,17 +236,22 @@ document.addEventListener("DOMContentLoaded", function () {
   startButton.addEventListener("click", function () {
     startButton.style.display = "none";
     backToMenuButton.style.display = "none";
-    quizContainer.style.display = "block"
+    quizContainer.style.display = "block";
     controlButtons.style.display = "block";
     startAudio();
     laadVraag();
   });
 
-  // === API OPHALEN ===
+  // api wordt opgehaald van The one api
   async function main() {
     try {
-      let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", { headers: headers });
-      let responseCharacters = await fetch("https://the-one-api.dev/v2/character", { headers: headers });
+      let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", {
+        headers: headers,
+      });
+      let responseCharacters = await fetch(
+        "https://the-one-api.dev/v2/character",
+        { headers: headers }
+      );
 
       let quotesData = await responseQuotes.json();
       let charactersData = await responseCharacters.json();
@@ -259,5 +268,4 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   main();
-
 });
