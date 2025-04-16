@@ -16,16 +16,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const vraagElement = document.querySelector("h2");
   const antwoordKnoppen = document.querySelectorAll(".btn");
+  const movieKnoppen = document.querySelectorAll(".een");
+  const characterKnoppen = document.querySelectorAll(".twee");
   const nextButton = document.querySelector(".next");
   const motivationalSection = document.getElementById("motivationalMessage");
 
   // Variabele
-  const quotes = [];
-  const characters = [];
+  let quotes = [];
+  let characters = [];
+  let movies = [];
   let gebruikteQuotes = [];
   let score = 0;
+  let geselecteerdeCharacter = null;
+  let geselecteerdeMovie = null;
   let geselecteerdeKnop = null;
   let juisteCharacterId = null;
+  let juisteMovieId = null;
   let checkMode = true;
   startButton.disabled = true;
 
@@ -130,7 +136,10 @@ document.addEventListener("DOMContentLoaded", function () {
     juisteCharacterId = vraagInhoud.character;
     const juisteCharacter = characters.find((c) => c._id === juisteCharacterId);
 
-    if (!juisteCharacter) {
+    juisteMovieId = vraagInhoud.movie;
+    const juisteMovie = movies.find((m) => m._id === juisteMovieId);
+
+    if (!juisteCharacter || !juisteMovie) {
       console.error(
         "Juiste character niet gevonden voor ID:",
         juisteCharacterId
@@ -138,19 +147,31 @@ document.addEventListener("DOMContentLoaded", function () {
       laadVraag();
       return;
     }
-
+    let fouteMovies = movies
+      .filter((m) => m._id !== juisteMovieId)
+      .sort(() => 0.5 - Math.random());
     let fouteCharacters = characters
       .filter((c) => c._id !== juisteCharacterId)
       .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
+      .slice(0, 2);
 
-    let antwoorden = [...fouteCharacters, juisteCharacter].sort(
+    let antwoordenCharacters = [...fouteCharacters, juisteCharacter].sort(
       () => 0.5 - Math.random()
     );
 
-    antwoordKnoppen.forEach((knop, index) => {
-      knop.textContent = antwoorden[index].name;
-      knop.onclick = () => selecteerAntwoord(knop, antwoorden[index]._id);
+    let antwoordenMovies = [...fouteMovies, juisteMovie].sort(
+      () => 0.5 - Math.random()
+    );
+
+    characterKnoppen.forEach((knop, index) => {
+      knop.textContent = antwoordenCharacters[index].name;
+      knop.onclick = () =>
+        selecteerCharacter(knop, antwoordenCharacters[index]._id);
+    });
+
+    movieKnoppen.forEach((knop, index) => {
+      knop.textContent = antwoordenMovies[index].name;
+      knop.onclick = () => selecteerMovie(knop, antwoordenMovies[index]._id);
     });
 
     nextButton.textContent = "Check";
@@ -158,44 +179,61 @@ document.addEventListener("DOMContentLoaded", function () {
     geselecteerdeKnop = null;
   }
 
-  function selecteerAntwoord(button, gekozenId) {
-    geselecteerdeKnop = { button, gekozenId };
-
-    antwoordKnoppen.forEach((knop) => {
-      knop.style.background = "";
-      knop.style.color = "white";
+  function selecteerCharacter(knop, gekozenId) {
+    geselecteerdeCharacter = { knop, gekozenId };
+    characterKnoppen.forEach((btn) => {
+      btn.style.background = "";
+      btn.style.color = "white";
     });
+    knop.style.background = "gray";
+    knop.style.color = "black";
+  }
 
-    button.style.background = "gray";
-    button.style.color = "black";
+  function selecteerMovie(knop, gekozenId) {
+    geselecteerdeMovie = { knop, gekozenId };
+    movieKnoppen.forEach((btn) => {
+      btn.style.background = "";
+      btn.style.color = "white";
+    });
+    knop.style.background = "gray";
+    knop.style.color = "black";
   }
 
   function controleerAntwoord() {
-    if (!geselecteerdeKnop) {
-      toonMelding("Kies eerst een antwoord voordat je checkt!");
+    if (!geselecteerdeCharacter || !geselecteerdeMovie) {
+      toonMelding("Kies een character én een film voordat je checkt!");
       return;
     }
 
-    antwoordKnoppen.forEach((knop) => (knop.disabled = true));
+    characterKnoppen.forEach((knop) => (knop.disabled = true));
+    movieKnoppen.forEach((knop) => (knop.disabled = true));
+    const juistCharacter =
+      geselecteerdeCharacter.gekozenId === juisteCharacterId;
+    const juisteMovie = geselecteerdeMovie.gekozenId === juisteMovieId;
 
-    const gekozenId = geselecteerdeKnop.gekozenId;
-
-    if (gekozenId === juisteCharacterId) {
-      geselecteerdeKnop.button.style.background =
+    if (juistCharacter && juisteMovie) {
+      geselecteerdeCharacter.knop.style.background =
         "linear-gradient(to bottom, #2d8f2d, #1e691e)"; // Groen voor juist
-      geselecteerdeKnop.button.style.color = "white"; // De tekstkleur wordt wit
+      geselecteerdeCharacter.knop.style.color = "white"; // De tekstkleur wordt wit
+      geselecteerdeMovie.knop.style.background =
+        "linear-gradient(to bottom, #2d8f2d, #1e691e)";
+      geselecteerdeMovie.knop.style.color = "white";
       score++;
       nextButton.textContent = "Next";
       checkMode = false;
       showMotivationalMessage();
     } else {
-      const juisteCharacter = characters.find(
-        (c) => c._id === juisteCharacterId
-      );
-
-      antwoordKnoppen.forEach((knop) => {
-        if (knop.textContent === juisteCharacter.name) {
-          knop.style.backgroundColor = "green";
+      characterKnoppen.forEach((knop) => {
+        const char = characters.find((c) => c.name === knop.textContent);
+        if (char && char._id === juisteCharacterId) {
+          knop.style.background = "green";
+          knop.style.color = "white";
+        }
+      });
+      movieKnoppen.forEach((knop) => {
+        const mov = movies.find((m) => m.name === knop.textContent);
+        if (mov && mov._id === juisteMovieId) {
+          knop.style.background = "green";
           knop.style.color = "white";
         }
       });
@@ -209,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function reset() {
-    antwoordKnoppen.forEach((btn) => {
+    [...characterKnoppen, ...movieKnoppen].forEach((btn) => {
       btn.style.backgroundColor = "";
       btn.style.background = "";
       btn.style.color = "#eeeed4";
@@ -217,14 +255,15 @@ document.addEventListener("DOMContentLoaded", function () {
       btn.style.display = "inline-block";
     });
 
-    geselecteerdeKnop = null;
+    geselecteerdeCharacter = null;
+    geselecteerdeMovie = null;
   }
 
   // eventListener
   nextButton.addEventListener("click", () => {
     if (checkMode) {
-      if (!geselecteerdeKnop) {
-        toonMelding("Kies eerst een antwoord voordat je checkt!");
+      if (!geselecteerdeCharacter || !geselecteerdeMovie) {
+        toonMelding("Kies een character én een film voordat je checkt!");
         return;
       }
       controleerAntwoord();
@@ -252,14 +291,22 @@ document.addEventListener("DOMContentLoaded", function () {
         "https://the-one-api.dev/v2/character",
         { headers: headers }
       );
+      let responseMovies = await fetch("https://the-one-api.dev/v2/movie", {
+        headers: headers,
+      });
 
       let quotesData = await responseQuotes.json();
       let charactersData = await responseCharacters.json();
-
+      let movieData = await responseMovies.json();
       quotes.push(...quotesData.docs);
       characters.push(...charactersData.docs);
+      movies.push(...movieData.docs);
+      movies = [...movies.slice(5)];
+      let geldigeMovieIds = movies.map((m) => m._id);
+      quotes = quotes.filter((q) => geldigeMovieIds.includes(q.movie));
       console.log("Quotes geladen:", quotes.length);
       console.log("Characters geladen:", characters.length);
+      console.log("Movies zijn geladen:", movies.length);
       console.log("Quotes en characters geladen!");
       startButton.disabled = false;
     } catch (error) {

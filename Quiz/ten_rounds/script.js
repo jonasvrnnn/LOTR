@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // html elementen
   const startButton = document.getElementById("startButton");
   const backToMenuButton = document.getElementById("backToMenuButton");
   const quizContainer = document.getElementById("quizContainer");
@@ -15,71 +14,48 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelButton = document.getElementById("cancelButton");
 
   const vraagElement = document.querySelector("h2");
-  const antwoordKnoppen = document.querySelectorAll(".btn");
+  const characterKnoppen = document.querySelectorAll(".twee");
+  const movieKnoppen = document.querySelectorAll(".een");
   const nextButton = document.querySelector(".next");
   const motivationalSection = document.getElementById("motivationalMessage");
 
-  // variabelen
-  const quotes = [];
-  const characters = [];
+  let quotes = [];
+  let characters = [];
+  let movies = [];
   let gebruikteQuotes = [];
   let score = 0;
-  let geselecteerdeKnop = null;
-  let juisteCharacterId = null;
-  let checkMode = true;
   let huidigeVraagIndex = 0;
   const maxVragen = 10;
+
+  let geselecteerdeCharacter = null;
+  let geselecteerdeMovie = null;
+  let juisteCharacterId = null;
+  let juisteMovieId = null;
+  let checkMode = true;
   startButton.disabled = true;
 
-  const motivationalMessages = [
-    "Je hebt de wijsheid van Gandalf! Goed gedaan 🧙‍♂️!",
-    "Dat was een machtig antwoord, waardig voor een koning 👑!",
-    "Eén antwoord om ze allemaal te verslaan! Je hebt het goed 💍🔥!",
-    "Zelf Elrond zou onder de indruk zijn van jouw kennis 📜!",
-    "Net als Legolas’ pijlen, raakte jouw antwoord doel 🏹!",
-    "De weg gaat altijd verder, en jij bewandelt hem met wijsheid 🛤️!",
-    "Dat was een legendarisch antwoord, waardig voor de Zaal van Gondor 🏰!",
-    "Zelf Sauron zou niet kunnen ontkennen dat dit juist was 👁️!",
-    "Bij het licht van Eärendil, jij bent echt slim 🌟!",
-    "Je hebt bewezen zo wijs te zijn als de elfen van Rivendel 🌿!",
-  ];
-
-  const failMessages = [
-    "De duistere schaduwen van Mordor hebben je te pakken... 💀",
-    "Zelf Gollum wist dit nog! 😱",
-    "Dat was als dwalen in de mist van de Gevaarlijke Moerassen... 🌫️",
-    "De Palantír toonde je de verkeerde weg! 🔮",
-    "Saruman lacht in zijn toren... 🏰",
-    "De Orcs vieren feest in de Black Gate... 😈",
-    "Je vergat het advies van Gandalf! 📚",
-    "Zelf een Hobbit zou dit weten... 🍃",
-    "Sauron zag je fout en lacht vanuit Barad-dûr! 🔥",
-    "De Nazgûl naderen... Wees voorzichtig! 🐉",
-  ];
+  const motivationalMessages = [];
+  const failMessages = [];
 
   const headers = {
     Accept: "application/json",
     Authorization: "Bearer UCTCCx7EBG3IuHh7Cfst",
   };
 
-  // hier wordt de audio gestart
   function startAudio() {
-    lotrAudio.play().catch((error) => {
-      console.log("Autoplay geblokkeerd, gebruiker moet handmatig starten.");
+    lotrAudio.play().catch(() => {
+      console.log("Autoplay geblokkeerd.");
     });
   }
 
-  // popups
   function showPopup(message, confirmAction) {
     popupMessage.textContent = message;
     popup.style.display = "block";
     popupBackground.style.display = "block";
-
-    confirmButton.onclick = function () {
-      confirmAction();
+    confirmButton.onclick = () => {
+      confirmAction?.();
       closePopup();
     };
-
     cancelButton.onclick = closePopup;
     popupBackground.onclick = closePopup;
   }
@@ -89,17 +65,16 @@ document.addEventListener("DOMContentLoaded", function () {
     popupBackground.style.display = "none";
   }
 
-  pauseButton.addEventListener("click", function () {
+  pauseButton.addEventListener("click", () => {
     showPopup("Weet je zeker dat je de quiz wilt pauzeren?");
   });
 
-  exitButton.addEventListener("click", function () {
-    showPopup("Weet je zeker dat je de quiz wilt verlaten?", function () {
+  exitButton.addEventListener("click", () => {
+    showPopup("Weet je zeker dat je de quiz wilt verlaten?", () => {
       window.location.reload();
     });
   });
 
-  // melding tonen
   function toonMelding(tekst, kleur = "red") {
     motivationalSection.textContent = tekst;
     motivationalSection.style.display = "block";
@@ -107,16 +82,49 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showMotivationalMessage() {
-    const randomIndex = Math.floor(Math.random() * motivationalMessages.length);
-    toonMelding(motivationalMessages[randomIndex], "green");
+    const msg =
+      motivationalMessages[
+        Math.floor(Math.random() * motivationalMessages.length)
+      ];
+    toonMelding(msg, "green");
   }
 
   function showFailMessage() {
-    const randomIndex = Math.floor(Math.random() * failMessages.length);
-    toonMelding(failMessages[randomIndex], "red");
+    const msg = failMessages[Math.floor(Math.random() * failMessages.length)];
+    toonMelding(msg, "red");
   }
 
-  // vragen
+  function reset() {
+    [...characterKnoppen, ...movieKnoppen].forEach((btn) => {
+      btn.style.background = "";
+      btn.style.color = "white";
+      btn.disabled = false;
+      btn.style.display = "inline-block";
+    });
+    geselecteerdeCharacter = null;
+    geselecteerdeMovie = null;
+  }
+
+  function selecteerCharacter(knop, gekozenId) {
+    geselecteerdeCharacter = { knop, gekozenId };
+    characterKnoppen.forEach((btn) => {
+      btn.style.background = "";
+      btn.style.color = "white";
+    });
+    knop.style.background = "gray";
+    knop.style.color = "black";
+  }
+
+  function selecteerMovie(knop, gekozenId) {
+    geselecteerdeMovie = { knop, gekozenId };
+    movieKnoppen.forEach((btn) => {
+      btn.style.background = "";
+      btn.style.color = "white";
+    });
+    knop.style.background = "gray";
+    knop.style.color = "black";
+  }
+
   function laadVraag() {
     if (huidigeVraagIndex >= maxVragen) {
       beëindigQuiz();
@@ -125,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     reset();
     toonMelding("");
-
     let vraagInhoud;
 
     do {
@@ -138,119 +145,126 @@ document.addEventListener("DOMContentLoaded", function () {
     }`;
 
     juisteCharacterId = vraagInhoud.character;
-    const juisteCharacter = characters.find((c) => c._id === juisteCharacterId);
+    juisteMovieId = vraagInhoud.movie;
 
-    if (!juisteCharacter) {
-      console.error(
-        "Juiste character niet gevonden voor ID:",
-        juisteCharacterId
-      );
+    const juisteCharacter = characters.find((c) => c._id === juisteCharacterId);
+    const juisteMovie = movies.find((m) => m._id === juisteMovieId);
+
+    if (!juisteCharacter || !juisteMovie) {
       laadVraag();
       return;
     }
 
-    let fouteCharacters = characters
+    const fouteCharacters = characters
       .filter((c) => c._id !== juisteCharacterId)
       .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
+      .slice(0, 2);
+    const fouteMovies = movies
+      .filter((m) => m._id !== juisteMovieId)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 2);
 
-    let antwoorden = [...fouteCharacters, juisteCharacter].sort(
+    const antwoordenCharacters = [...fouteCharacters, juisteCharacter].sort(
+      () => 0.5 - Math.random()
+    );
+    const antwoordenMovies = [...fouteMovies, juisteMovie].sort(
       () => 0.5 - Math.random()
     );
 
-    antwoordKnoppen.forEach((knop, index) => {
-      knop.textContent = antwoorden[index].name;
-      knop.onclick = () => selecteerAntwoord(knop, antwoorden[index]._id);
+    characterKnoppen.forEach((knop, index) => {
+      knop.textContent = antwoordenCharacters[index].name;
+      knop.onclick = () =>
+        selecteerCharacter(knop, antwoordenCharacters[index]._id);
+    });
+
+    movieKnoppen.forEach((knop, index) => {
+      knop.textContent = antwoordenMovies[index].name;
+      knop.onclick = () => selecteerMovie(knop, antwoordenMovies[index]._id);
     });
 
     nextButton.textContent = "Check";
     checkMode = true;
-    geselecteerdeKnop = null;
-  }
-
-  function selecteerAntwoord(button, gekozenId) {
-    geselecteerdeKnop = { button, gekozenId };
-
-    antwoordKnoppen.forEach((knop) => {
-      knop.style.background = "";
-      knop.style.color = "#eeeed4";
-    });
-
-    button.style.background = "gray";
-    button.style.color = "black";
   }
 
   function controleerAntwoord() {
-    if (!geselecteerdeKnop) {
-      toonMelding("Kies eerst een antwoord voordat je checkt!");
+    if (!geselecteerdeCharacter || !geselecteerdeMovie) {
+      toonMelding("Kies een character én een film!");
       return;
     }
 
-    antwoordKnoppen.forEach((knop) => (knop.disabled = true));
+    characterKnoppen.forEach((knop) => (knop.disabled = true));
+    movieKnoppen.forEach((knop) => (knop.disabled = true));
 
-    const gekozenId = geselecteerdeKnop.gekozenId;
+    const juistCharacter =
+      geselecteerdeCharacter.gekozenId === juisteCharacterId;
+    const juisteMovie = geselecteerdeMovie.gekozenId === juisteMovieId;
 
-    // Het juiste antwoord
-    if (gekozenId === juisteCharacterId) {
-      geselecteerdeKnop.button.style.background =
-        "linear-gradient(to bottom, #2d8f2d, #1e691e)"; // Groen voor juist
-      geselecteerdeKnop.button.style.color = "white"; // De tekstkleur wordt wit
-
+    if (juistCharacter && juisteMovie) {
+      geselecteerdeCharacter.knop.style.background =
+        "linear-gradient(to bottom, #2d8f2d, #1e691e)";
+      geselecteerdeMovie.knop.style.background =
+        "linear-gradient(to bottom, #2d8f2d, #1e691e)";
+      geselecteerdeCharacter.knop.style.color = "white";
+      geselecteerdeMovie.knop.style.color = "white";
       score++;
       showMotivationalMessage();
     } else {
-      // Foute knop: rood
-      geselecteerdeKnop.button.style.background =
-        "linear-gradient(to bottom, #d14343, #b32b2b)";
-      geselecteerdeKnop.button.style.color = "white"; // Witte tekst voor de foute knop
+      if (!juistCharacter) {
+        geselecteerdeCharacter.knop.style.background =
+          "linear-gradient(to bottom, #d14343, #b32b2b)";
+        geselecteerdeCharacter.knop.style.color = "white";
+      } else {
+        geselecteerdeCharacter.knop.style.background =
+          "linear-gradient(to bottom, #2d8f2d, #1e691e)";
+        geselecteerdeCharacter.knop.style.color = "white";
+      }
 
-      // juiste karakter wordt gezogd
-      const juisteCharacter = characters.find(
-        (c) => c._id === juisteCharacterId
-      );
+      if (!juisteMovie) {
+        geselecteerdeMovie.knop.style.background =
+          "linear-gradient(to bottom, #d14343, #b32b2b)";
+        geselecteerdeMovie.knop.style.color = "white";
+      } else {
+        geselecteerdeMovie.knop.style.background =
+          "linear-gradient(to bottom, #2d8f2d, #1e691e)";
+        geselecteerdeMovie.knop.style.color = "white";
+      }
 
-      // Zet de juiste knop op groen
-      antwoordKnoppen.forEach((knop) => {
-        if (knop.textContent === juisteCharacter.name) {
+      // Highlight juiste antwoorden
+      characterKnoppen.forEach((knop) => {
+        const char = characters.find((c) => c.name === knop.textContent);
+        if (char && char._id === juisteCharacterId) {
           knop.style.background =
             "linear-gradient(to bottom, #2d8f2d, #1e691e)";
-          knop.style.color = "white"; // Witte tekst voor de juiste knop
+          knop.style.color = "white";
+        }
+      });
+
+      movieKnoppen.forEach((knop) => {
+        const mov = movies.find((m) => m.name === knop.textContent);
+        if (mov && mov._id === juisteMovieId) {
+          knop.style.background =
+            "linear-gradient(to bottom, #2d8f2d, #1e691e)";
+          knop.style.color = "white";
         }
       });
 
       showFailMessage();
     }
-
     nextButton.textContent = "Volgende";
     checkMode = false;
   }
 
   function beëindigQuiz() {
     vraagElement.textContent = `Quiz voltooid! Je score: ${score}/${maxVragen}`;
-    antwoordKnoppen.forEach((knop) => (knop.style.display = "none"));
+    [...characterKnoppen, ...movieKnoppen].forEach(
+      (knop) => (knop.style.display = "none")
+    );
     nextButton.style.display = "none";
     toonMelding("");
   }
 
-  function reset() {
-    antwoordKnoppen.forEach((btn) => {
-      btn.style.backgroundColor = "#464038";
-      btn.style.color = "#eeeed4";
-      btn.style.background = "";
-      btn.disabled = false;
-      btn.style.display = "inline-block";
-    });
-
-    geselecteerdeKnop = null;
-  }
-
-  // event listener
   nextButton.addEventListener("click", () => {
     if (checkMode) {
-      if (!geselecteerdeKnop) {
-        toonMelding("Kies eerst een antwoord voordat je checkt!");
-        return;
-      }
       controleerAntwoord();
     } else {
       huidigeVraagIndex++;
@@ -258,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  startButton.addEventListener("click", function () {
+  startButton.addEventListener("click", () => {
     startButton.style.display = "none";
     backToMenuButton.style.display = "none";
     quizContainer.style.display = "block";
@@ -270,7 +284,6 @@ document.addEventListener("DOMContentLoaded", function () {
     laadVraag();
   });
 
-  // api wordt opgehaald van The one api
   async function main() {
     try {
       let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", {
@@ -280,19 +293,27 @@ document.addEventListener("DOMContentLoaded", function () {
         "https://the-one-api.dev/v2/character",
         { headers: headers }
       );
+      let responseMovies = await fetch("https://the-one-api.dev/v2/movie", {
+        headers: headers,
+      });
 
       let quotesData = await responseQuotes.json();
       let charactersData = await responseCharacters.json();
-
+      let movieData = await responseMovies.json();
       quotes.push(...quotesData.docs);
       characters.push(...charactersData.docs);
+      movies.push(...movieData.docs);
+      movies = [...movies.slice(5)];
+      let geldigeMovieIds = movies.map((m) => m._id);
+      quotes = quotes.filter((q) => geldigeMovieIds.includes(q.movie));
       console.log("Quotes geladen:", quotes.length);
       console.log("Characters geladen:", characters.length);
+      console.log("Movies zijn geladen:", movies.length);
+      console.log("Quotes en characters geladen!");
       startButton.disabled = false;
     } catch (error) {
       console.log("Fout bij ophalen van data:", error);
     }
   }
-
   main();
 });
