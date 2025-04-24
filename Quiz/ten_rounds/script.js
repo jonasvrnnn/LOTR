@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
     backToMenuButton.style.display = "none";
     quizContainer.style.display = "block";
     controlButtons.style.display = "block";
-    startAudio();
+    // startAudio();
     huidigeVraagIndex = 0;
     score = 0;
     gebruikteQuotes = [];
@@ -306,6 +306,10 @@ document.addEventListener("DOMContentLoaded", function () {
       movies = [...movies.slice(5)];
       let geldigeMovieIds = movies.map((m) => m._id);
       quotes = quotes.filter((q) => geldigeMovieIds.includes(q.movie));
+      let geldigeCharacterIds = quotes.map((q) => q.character);
+      characters = characters.filter((c) =>
+        geldigeCharacterIds.includes(c._id)
+      );
       console.log("Quotes geladen:", quotes.length);
       console.log("Characters geladen:", characters.length);
       console.log("Movies zijn geladen:", movies.length);
