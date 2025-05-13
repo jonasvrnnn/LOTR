@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const backToMenuButton = document.getElementById("backToMenuButton");
   const quizContainer = document.getElementById("quizContainer");
   const controlButtons = document.getElementById("controlButtons");
+  const restartButton = document.getElementById("restartButton");
   const lotrAudio = document.getElementById("lotrAudio");
-  const pauseButton = document.getElementById("pauseButton");
   const exitButton = document.getElementById("exitButton");
 
   const popup = document.getElementById("popup");
@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let juisteMovieId = null;
   let checkMode = true;
   startButton.disabled = true;
-
   const motivationalMessages = [
     "Je hebt de wijsheid van Gandalf! Goed gedaan 🧙‍♂️!",
     "Dat was een machtig antwoord, waardig voor een koning 👑!",
@@ -93,14 +92,13 @@ document.addEventListener("DOMContentLoaded", function () {
     popupBackground.style.display = "none";
   }
 
-  pauseButton.addEventListener("click", function () {
+  /*pauseButton.addEventListener("click", function () {
     showPopup("Weet je zeker dat je de quiz wilt pauzeren?");
-  });
+  });*/
 
   exitButton.addEventListener("click", function () {
     showPopup("Weet je zeker dat je de quiz wilt verlaten?", function () {
-      window.location.reload();
-    });
+      window.location.href = '../../game_mode/index.html';    });
   });
 
   // melding tonen
@@ -277,6 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
     backToMenuButton.style.display = "none";
     quizContainer.style.display = "block";
     controlButtons.style.display = "block";
+    //restartButton.style.display = "none";
     startAudio();
     laadVraag();
   });
@@ -285,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function main() {
     try {
       let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", {
-        headers: headers,
+        headers: headers
       });
       let responseCharacters = await fetch(
         "https://the-one-api.dev/v2/character",
@@ -313,10 +312,15 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Movies zijn geladen:", movies.length);
       console.log("Quotes en characters geladen!");
       startButton.disabled = false;
+
     } catch (error) {
       console.log("Fout bij ophalen van data:", error);
     }
   }
-
+// herstart knop voor na de quiz
+restartButton.addEventListener("click", function(){
+nextButton.style.display = "block";
+laadVraag();
+})
   main();
 });

@@ -65,10 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
     popupBackground.style.display = "none";
   }
 
-  pauseButton.addEventListener("click", () => {
-    showPopup("Weet je zeker dat je de quiz wilt pauzeren?");
-  });
-
   exitButton.addEventListener("click", () => {
     showPopup("Weet je zeker dat je de quiz wilt verlaten?", () => {
       window.location.reload();
@@ -320,5 +316,10 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Fout bij ophalen van data:", error);
     }
   }
+
+  // herstart knop voor na de quiz
+restartButton.addEventListener("click", function(){
+  laadVraag();
+  })
   main();
 });
