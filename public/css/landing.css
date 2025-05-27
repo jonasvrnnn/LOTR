@@ -12,7 +12,7 @@ body {
   min-height: 100vh;
   position: relative;
 
-  background-image: url("/images/landing/backgroundPic.webp");
+  background-image: url("/images/landing/blauw.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -43,10 +43,15 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 2em;
-  color: #d3d1ae;
+  color: white;
   border-radius: 15px;
-  box-shadow: 0px 0px 15px rgba(211, 209, 174, 0.6);
+  box-shadow: 0px 0px 15px white;
 }
+/* 
+#d3d1ae
+0px 0px 15px rgba(211, 209, 174, 0.6);
+
+ */
 
 .selection {
   display: flex;
@@ -89,11 +94,14 @@ body {
   padding: 10px 0;
   font-size: 1.1em;
   background: rgba(0, 0, 0, 0.6);
-  color: #eeeed4;
+  color: white;
   position: absolute;
   bottom: 0;
   transition: background 0.3s ease;
 }
+/*
+#eeeed4 
+ */
 
 .project:hover .project-title {
   background: rgba(0, 0, 0, 0.8);
