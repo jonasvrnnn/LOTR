@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   exitButton.addEventListener("click", () => {
     showPopup("Weet je zeker dat je de quiz wilt verlaten?", () => {
-      window.location.reload();
+      window.location.href = "/gameMode";
     });
   });
 

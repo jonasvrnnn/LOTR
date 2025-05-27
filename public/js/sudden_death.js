@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   exitButton.addEventListener("click", function () {
     showPopup("Weet je zeker dat je de quiz wilt verlaten?", function () {
-      window.location.href = "/game_mode";
+      window.location.href = "/gameMode";
     });
   });
 
