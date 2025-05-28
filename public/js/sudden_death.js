@@ -60,10 +60,27 @@ document.addEventListener("DOMContentLoaded", function () {
     "De Nazgûl naderen... Wees voorzichtig! 🐉",
   ];
 
-  const headers = {
-    Accept: "application/json",
-    Authorization: "Bearer UCTCCx7EBG3IuHh7Cfst",
-  };
+  // const headers = {
+  //   Accept: "application/json",
+  //   Authorization: "Bearer UCTCCx7EBG3IuHh7Cfst",
+  // };
+
+  const dataDiv = document.getElementById("game-data");
+  if (!dataDiv) {
+    console.error("Kan #game-data niet vinden!");
+    return;
+  }
+  try {
+    const rawData = decodeURIComponent(dataDiv.dataset.json);
+    const gameData = JSON.parse(rawData);
+    quotes = gameData.quotes;
+    characters = gameData.characters;
+    movies = gameData.movies;
+    console.log("Data geladen via EJS:", gameData);
+    startButton.disabled = false;
+  } catch (err) {
+    console.error("Fout bij parsen van gameData:", err);
+  }
 
   // audio starten bij opstarten van het spel
   function startAudio() {
@@ -282,45 +299,45 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // api wordt opgehaald van The one api
-  async function main() {
-    try {
-      let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", {
-        headers: headers,
-      });
-      let responseCharacters = await fetch(
-        "https://the-one-api.dev/v2/character",
-        { headers: headers }
-      );
-      let responseMovies = await fetch("https://the-one-api.dev/v2/movie", {
-        headers: headers,
-      });
+  // async function main() {
+  //   try {
+  //     let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", {
+  //       headers: headers,
+  //     });
+  //     let responseCharacters = await fetch(
+  //       "https://the-one-api.dev/v2/character",
+  //       { headers: headers }
+  //     );
+  //     let responseMovies = await fetch("https://the-one-api.dev/v2/movie", {
+  //       headers: headers,
+  //     });
 
-      let quotesData = await responseQuotes.json();
-      let charactersData = await responseCharacters.json();
-      let movieData = await responseMovies.json();
-      quotes.push(...quotesData.docs);
-      characters.push(...charactersData.docs);
-      movies.push(...movieData.docs);
-      movies = [...movies.slice(5)];
-      let geldigeMovieIds = movies.map((m) => m._id);
-      quotes = quotes.filter((q) => geldigeMovieIds.includes(q.movie));
-      let geldigeCharacterIds = quotes.map((q) => q.character);
-      characters = characters.filter((c) =>
-        geldigeCharacterIds.includes(c._id)
-      );
-      console.log("Quotes geladen:", quotes.length);
-      console.log("Characters geladen:", characters.length);
-      console.log("Movies zijn geladen:", movies.length);
-      console.log("Quotes en characters geladen!");
-      startButton.disabled = false;
-    } catch (error) {
-      console.log("Fout bij ophalen van data:", error);
-    }
-  }
+  //     let quotesData = await responseQuotes.json();
+  //     let charactersData = await responseCharacters.json();
+  //     let movieData = await responseMovies.json();
+  //     quotes.push(...quotesData.docs);
+  //     characters.push(...charactersData.docs);
+  //     movies.push(...movieData.docs);
+  //     movies = [...movies.slice(5)];
+  //     let geldigeMovieIds = movies.map((m) => m._id);
+  //     quotes = quotes.filter((q) => geldigeMovieIds.includes(q.movie));
+  //     let geldigeCharacterIds = quotes.map((q) => q.character);
+  //     characters = characters.filter((c) =>
+  //       geldigeCharacterIds.includes(c._id)
+  //     );
+  //     console.log("Quotes geladen:", quotes.length);
+  //     console.log("Characters geladen:", characters.length);
+  //     console.log("Movies zijn geladen:", movies.length);
+  //     console.log("Quotes en characters geladen!");
+  //     startButton.disabled = false;
+  //   } catch (error) {
+  //     console.log("Fout bij ophalen van data:", error);
+  //   }
+  // }
   // herstart knop voor na de quiz
   restartButton.addEventListener("click", function () {
     nextButton.style.display = "block";
     laadVraag();
   });
-  main();
+  // main();
 });

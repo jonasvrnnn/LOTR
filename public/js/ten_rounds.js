@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const quizContainer = document.getElementById("quizContainer");
   const controlButtons = document.getElementById("controlButtons");
   const lotrAudio = document.getElementById("lotrAudio");
-  const pauseButton = document.getElementById("pauseButton");
+  const restartButton = document.getElementById("restartButton");
   const exitButton = document.getElementById("exitButton");
 
   const popup = document.getElementById("popup");
@@ -34,13 +34,52 @@ document.addEventListener("DOMContentLoaded", function () {
   let checkMode = true;
   startButton.disabled = true;
 
-  const motivationalMessages = [];
-  const failMessages = [];
+  const motivationalMessages = [
+    "Je hebt de wijsheid van Gandalf! Goed gedaan 🧙‍♂️!",
+    "Dat was een machtig antwoord, waardig voor een koning 👑!",
+    "Eén antwoord om ze allemaal te verslaan! Je hebt het goed 💍🔥!",
+    "Zelfs Elrond zou onder de indruk zijn van jouw kennis 📜!",
+    "Net als Legolas’ pijlen, raakte jouw antwoord doel 🏹!",
+    "De weg gaat altijd verder, en jij bewandelt hem met wijsheid 🛤️!",
+    "Dat was een legendarisch antwoord, waardig voor de Zaal van Gondor 🏰!",
+    "Zelf Sauron zou niet kunnen ontkennen dat dit juist was 👁️!",
+    "Bij het licht van Eärendil, jij bent echt slim 🌟!",
+    "Je hebt bewezen zo wijs te zijn als de elfen van Rivendel 🌿!",
+  ];
+  const failMessages = [
+    "De duistere schaduwen van Mordor hebben je te pakken... 💀",
+    "Zelf Gollum wist dit nog! 😱",
+    "Dat was als dwalen in de mist van de Gevaarlijke Moerassen... 🌫️",
+    "De Palantír toonde je de verkeerde weg! 🔮",
+    "Saruman lacht in zijn toren... 🏰",
+    "De Orcs vieren feest in de Black Gate... 😈",
+    "Je vergat het advies van Gandalf! 📚",
+    "Zelf een Hobbit zou dit weten... 🍃",
+    "Sauron zag je fout en lacht vanuit Barad-dûr! 🔥",
+    "De Nazgûl naderen... Wees voorzichtig! 🐉",
+  ];
 
-  const headers = {
-    Accept: "application/json",
-    Authorization: "Bearer UCTCCx7EBG3IuHh7Cfst",
-  };
+  // const headers = {
+  //   Accept: "application/json",
+  //   Authorization: "Bearer UCTCCx7EBG3IuHh7Cfst",
+  // };
+
+  const dataDiv = document.getElementById("game-data");
+  if (!dataDiv) {
+    console.error("Kan #game-data niet vinden!");
+    return;
+  }
+  try {
+    const rawData = decodeURIComponent(dataDiv.dataset.json);
+    const gameData = JSON.parse(rawData);
+    quotes = gameData.quotes;
+    characters = gameData.characters;
+    movies = gameData.movies;
+    console.log("Data geladen via EJS:", gameData);
+    startButton.disabled = false;
+  } catch (err) {
+    console.error("Fout bij parsen van gameData:", err);
+  }
 
   function startAudio() {
     lotrAudio.play().catch(() => {
@@ -280,46 +319,46 @@ document.addEventListener("DOMContentLoaded", function () {
     laadVraag();
   });
 
-  async function main() {
-    try {
-      let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", {
-        headers: headers,
-      });
-      let responseCharacters = await fetch(
-        "https://the-one-api.dev/v2/character",
-        { headers: headers }
-      );
-      let responseMovies = await fetch("https://the-one-api.dev/v2/movie", {
-        headers: headers,
-      });
+  // async function main() {
+  //   try {
+  //     let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", {
+  //       headers: headers,
+  //     });
+  //     let responseCharacters = await fetch(
+  //       "https://the-one-api.dev/v2/character",
+  //       { headers: headers }
+  //     );
+  //     let responseMovies = await fetch("https://the-one-api.dev/v2/movie", {
+  //       headers: headers,
+  //     });
 
-      let quotesData = await responseQuotes.json();
-      let charactersData = await responseCharacters.json();
-      let movieData = await responseMovies.json();
-      quotes.push(...quotesData.docs);
-      characters.push(...charactersData.docs);
-      movies.push(...movieData.docs);
-      movies = [...movies.slice(5)];
-      let geldigeMovieIds = movies.map((m) => m._id);
-      quotes = quotes.filter((q) => geldigeMovieIds.includes(q.movie));
+  //     let quotesData = await responseQuotes.json();
+  //     let charactersData = await responseCharacters.json();
+  //     let movieData = await responseMovies.json();
+  //     quotes.push(...quotesData.docs);
+  //     characters.push(...charactersData.docs);
+  //     movies.push(...movieData.docs);
+  //     movies = [...movies.slice(5)];
+  //     let geldigeMovieIds = movies.map((m) => m._id);
+  //     quotes = quotes.filter((q) => geldigeMovieIds.includes(q.movie));
 
-      let geldigeCharacterIds = quotes.map((q) => q.character);
-      characters = characters.filter((c) =>
-        geldigeCharacterIds.includes(c._id)
-      );
-      console.log("Quotes geladen:", quotes.length);
-      console.log("Characters geladen:", characters.length);
-      console.log("Movies zijn geladen:", movies.length);
-      console.log("Quotes en characters geladen!");
-      startButton.disabled = false;
-    } catch (error) {
-      console.log("Fout bij ophalen van data:", error);
-    }
-  }
+  //     let geldigeCharacterIds = quotes.map((q) => q.character);
+  //     characters = characters.filter((c) =>
+  //       geldigeCharacterIds.includes(c._id)
+  //     );
+  //     console.log("Quotes geladen:", quotes.length);
+  //     console.log("Characters geladen:", characters.length);
+  //     console.log("Movies zijn geladen:", movies.length);
+  //     console.log("Quotes en characters geladen!");
+  //     startButton.disabled = false;
+  //   } catch (error) {
+  //     console.log("Fout bij ophalen van data:", error);
+  //   }
+  // }
 
   // herstart knop voor na de quiz
   restartButton.addEventListener("click", function () {
     laadVraag();
   });
-  main();
+  // main();
 });
