@@ -11,7 +11,17 @@
 
 <body>
     <div id="game-data" data-json="<%= gameData %>" style="display:none;"></div>
-    <h1><%=gameMode%></h1>
+    <h1 id="introTitle">
+        <% if (gameMode === "ten_rounds") { %>
+          Ten Rounds
+        <% } else if (gameMode === "sudden_death") { %>
+          Sudden Death
+        <% } else { %>
+          <%= gameMode %>
+        <% } %>
+      </h1>
+          <div id="introText">
+        <%- explanation %>
     <button class="beginKnop" id="startButton">Start de Quiz</button>
     <button onclick="window.location.href = '/gameMode';" class="beginKnop" id="backToMenuButton">Terug
         naar Menu</button>
