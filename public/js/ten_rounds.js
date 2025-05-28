@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const popupMessage = document.getElementById("popupMessage");
   const confirmButton = document.getElementById("confirmButton");
   const cancelButton = document.getElementById("cancelButton");
+  const reason = document.getElementById("feedbackReason").value.trim();
 
   const vraagElement = document.querySelector("h2");
   const characterKnoppen = document.querySelectorAll(".twee");
@@ -308,6 +309,7 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     nextButton.style.display = "none";
     toonMelding("");
+    saveResult(score);
   }
 
   nextButton.addEventListener("click", () => {
@@ -336,6 +338,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // herstart knop voor na de quiz
   restartButton.addEventListener("click", function () {
+    score = 0;
+    huidigeVraagIndex = 0;
+    gebruikteQuotes = [];
+
+    [...characterKnoppen, ...movieKnoppen].forEach((knop) => {
+      knop.style.display = "inline-block";
+      knop.disabled = false;
+    });
+
+    nextButton.style.display = "inline-block";
+    toonMelding("");
+
     laadVraag();
   });
   feedbackOverlay.addEventListener("click", closeFeedbackPopup);
@@ -354,6 +368,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   sendFeedback.addEventListener("click", () => {
+    const reason = document.getElementById("feedbackReason").value.trim();
     if (!selectedFeedback || !reason) {
       errorEl.textContent = "Kies een reactie en geef een reden op.";
       errorEl.style.display = "block";
@@ -364,6 +379,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Feedback:", selectedFeedback, "Reden:", reason);
     closeFeedbackPopup();
   });
+
   function closeFeedbackPopup() {
     feedbackPopup.style.display = "none";
     feedbackOverlay.style.display = "none";
@@ -372,6 +388,27 @@ document.addEventListener("DOMContentLoaded", function () {
     dislikeIcon.style.color = "";
     document.getElementById("feedbackReason").value = "";
   }
-
-  // main();
 });
+async function saveResult(score) {
+  try {
+    const response = await fetch("/save-result", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        gameMode: "10Rounds",
+        score: score,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP-fout! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Score opgeslagen:", data);
+  } catch (err) {
+    console.error("Fout bij opslaan score:", err);
+  }
+}

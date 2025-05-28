@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Statistieken</title>
   <link rel="stylesheet" href="/css/statistics.css" />
 </head>
@@ -28,19 +28,42 @@
           <th>Datum</th>
           <th>Gamemode</th>
           <th>Score</th>
+          <th>Duur</th>
         </tr>
       </thead>
       <tbody>
         <% allResults.forEach(result => { %>
           <tr>
             <td><%= new Date(result.date).toLocaleString("nl-NL") %></td>
-            <td><%= result.gameMode %></td>
+            <td>
+              <% if (result.gameMode === "sudden_death") { %>
+                Sudden Death
+              <% } else if (result.gameMode === "ten_rounds") { %>
+                10 Ronden
+              <% } else { %>
+                <%= result.gameMode %>
+              <% } %>
+            </td>
             <td><%= result.score %></td>
             <td><%= result.duration ? result.duration + " sec" : "-" %></td>
           </tr>
         <% }) %>
       </tbody>
     </table>
+  </section>
+
+  <!-- Nieuwe sectie voor geblackliste quotes -->
+  <section>
+    <h2>Geblackliste quotes</h2>
+    <% if (!blacklistedQuotes || blacklistedQuotes.length === 0) { %>
+      <p>Er zijn geen geblackliste quotes.</p>
+    <% } else { %>
+      <ul>
+        <% blacklistedQuotes.forEach(quote => { %>
+          <li><%= quote.text %> — <em><%= quote.author || "Onbekend" %></em></li>
+        <% }) %>
+      </ul>
+    <% } %>
   </section>
 
   <button onclick="window.location.href='/gameMode'">Terug naar gamemode</button>

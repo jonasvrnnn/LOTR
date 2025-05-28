@@ -6,12 +6,12 @@ import { Db } from "mongodb";
 import { loadGameData, requireLogin } from "./functions";
 import { connectToDB, closeDB } from "./db";
 
-// Initialisatie
 const app = express();
 const PORT = 3000;
 let db: Db;
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(session);
 
@@ -83,31 +83,64 @@ app.get("/statistics", requireLogin, async (req, res) => {
     return res.redirect("/login");
   }
 
-  // Voorbeeld: resultaten ophalen uit db.collection('results') (pas aan naar jouw database structuur)
   const results = await db.collection("results").find({ username }).toArray();
 
-  // Bereken highscores
   let suddenDeathHighscore = 0;
   let tenRoundsHighscore = 0;
 
   results.forEach((result) => {
-    if (result.gameMode === "sudden_death") {
-      if (result.score > suddenDeathHighscore)
-        suddenDeathHighscore = result.score;
-    }
-    if (result.gameMode === "ten_rounds") {
-      if (result.score > tenRoundsHighscore) tenRoundsHighscore = result.score;
-    }
+    if (
+      result.gameMode === "sudden_death" &&
+      result.score > suddenDeathHighscore
+    )
+      suddenDeathHighscore = result.score;
+    if (result.gameMode === "ten_rounds" && result.score > tenRoundsHighscore)
+      tenRoundsHighscore = result.score;
   });
+
+  const blacklistedQuotes = await db
+    .collection("blacklistedQuotes")
+    .find()
+    .toArray();
 
   res.render("statistics", {
     suddenDeathHighscore,
     tenRoundsHighscore,
     allResults: results,
+    blacklistedQuotes,
   });
 });
 
 //post requests
+
+app.post("/save-result", requireLogin, async (req, res) => {
+  const { gameMode, score } = req.body;
+  const username = req.session.user?.username;
+
+  if (!username) {
+    res.status(401).json({ error: "Niet ingelogd" });
+    return;
+  }
+
+  if (!gameMode || typeof score !== "number") {
+    res.status(400).json({ error: "Ongeldige invoer" });
+    return;
+  }
+
+  try {
+    await db.collection("results").insertOne({
+      username,
+      gameMode,
+      score,
+      date: new Date(),
+    });
+
+    res.status(200).json({ message: "Resultaat succesvol opgeslagen" });
+  } catch (err) {
+    console.error("Fout bij opslaan van resultaat:", err);
+    res.status(500).json({ error: "Fout bij opslaan van resultaat" });
+  }
+});
 
 app.post("/logout", (req, res) => {
   req.session.destroy(() => {
@@ -170,12 +203,10 @@ app.post("/register", async (req, res) => {
     res.status(400).send("Vul alle verplichte velden in");
   }
 
-  // Wachtwoorden matchen
   if (password !== confirmPassword) {
     res.status(400).send("Wachtwoorden komen niet overeen");
   }
 
-  // Check of gebruiker al bestaat op username of email
   const existingUser = await db.collection("users").findOne({
     $or: [{ username }, { email }],
   });
@@ -183,7 +214,6 @@ app.post("/register", async (req, res) => {
     res.status(400).send("Gebruikersnaam of e-mail is al in gebruik");
   }
 
-  // Optioneel: controle leeftijd (bv. 13+)
   const dob = new Date(dateOfBirth);
   const ageDifMs = Date.now() - dob.getTime();
   const ageDate = new Date(ageDifMs);
@@ -192,10 +222,8 @@ app.post("/register", async (req, res) => {
     res.status(400).send("Je moet minstens 13 jaar oud zijn om te registreren");
   }
 
-  // Hash wachtwoord
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Gebruiker opslaan
   await db.collection("users").insertOne({
     username,
     email,
@@ -219,14 +247,12 @@ app.post("/profile/edit", async (req, res) => {
   const { displayName, email, dateOfBirth, country, gender, phoneNumber } =
     req.body;
 
-  // Validatie (optioneel uitbreiden)
   if (!email || !dateOfBirth || !country) {
     res.status(400).send("Vul alle verplichte velden in.");
     return;
   }
 
   try {
-    // Update gebruiker in database
     await db.collection("users").updateOne(
       { username: req.session.user.username },
       {
@@ -241,7 +267,6 @@ app.post("/profile/edit", async (req, res) => {
       }
     );
 
-    // Update sessie data (optioneel, als je email of andere data gebruikt)
     const updatedUser = await db
       .collection("users")
       .findOne({ username: req.session.user.username });
@@ -268,7 +293,6 @@ app.post("/profile/edit", async (req, res) => {
   }
 });
 
-// Eerst verbinden met DB, dan pas server starten
 (async () => {
   try {
     db = await connectToDB();

@@ -154,21 +154,20 @@ document.addEventListener("DOMContentLoaded", function () {
     } while (gebruikteQuotes.includes(vraagInhoud._id));
 
     gebruikteQuotes.push(vraagInhoud._id);
-    vraagElement.innerHTML =
-    `${vraagInhoud.dialog} <ion-icon id="feedbackIcon" 
+    vraagElement.innerHTML = `${vraagInhoud.dialog} <ion-icon id="feedbackIcon" 
        name="chatbubble-ellipses-outline"
        style="font-size:28px;cursor:pointer;margin-left:10px;"
        tabindex="0" role="button"></ion-icon>`;
-       setTimeout(() => {
-        const newFeedbackIcon = document.getElementById("feedbackIcon");
-        if (newFeedbackIcon) {
-          newFeedbackIcon.addEventListener("click", () => {
-            feedbackPopup.style.display = "block";
-            feedbackOverlay.style.display = "block";
-          });
-        }
-      }, 0);
-      
+    setTimeout(() => {
+      const newFeedbackIcon = document.getElementById("feedbackIcon");
+      if (newFeedbackIcon) {
+        newFeedbackIcon.addEventListener("click", () => {
+          feedbackPopup.style.display = "block";
+          feedbackOverlay.style.display = "block";
+        });
+      }
+    }, 0);
+
     juisteCharacterId = vraagInhoud.character;
     const juisteCharacter = characters.find((c) => c._id === juisteCharacterId);
 
@@ -210,7 +209,8 @@ document.addEventListener("DOMContentLoaded", function () {
       knop.onclick = () => selecteerMovie(knop, antwoordenMovies[index]._id);
     });
 
-    nextButton.innerHTML = '<ion-icon name="checkmark"style="font-size: 40px;"></ion-icon>';
+    nextButton.innerHTML =
+      '<ion-icon name="checkmark"style="font-size: 40px;"></ion-icon>';
     checkMode = true;
     geselecteerdeKnop = null;
   }
@@ -255,7 +255,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "linear-gradient(to bottom, #2d8f2d, #1e691e)";
       geselecteerdeMovie.knop.style.color = "white";
       score++;
-      nextButton.innerHTML = '<ion-icon name="arrow-forward-outline" style="font-size: 32px;"></ion-icon>';
+      nextButton.innerHTML =
+        '<ion-icon name="arrow-forward-outline" style="font-size: 32px;"></ion-icon>';
       checkMode = false;
       showMotivationalMessage();
     } else {
@@ -279,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
       nextButton.style.display = "none";
 
       showFailMessage();
+      saveSuddenDeathResult(score);
     }
   }
 
@@ -330,19 +332,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // main();
   feedbackOverlay.addEventListener("click", closeFeedbackPopup);
   closeFeedback.addEventListener("click", closeFeedbackPopup);
-  
+
   likeIcon.addEventListener("click", () => {
     selectedFeedback = "like";
     likeIcon.style.color = "green";
     dislikeIcon.style.color = "";
   });
-  
+
   dislikeIcon.addEventListener("click", () => {
     selectedFeedback = "dislike";
     dislikeIcon.style.color = "red";
     likeIcon.style.color = "";
   });
-  
+
   sendFeedback.addEventListener("click", () => {
     const reason = feedbackReason.value.trim();
     if (!selectedFeedback || reason === "") {
@@ -350,13 +352,13 @@ document.addEventListener("DOMContentLoaded", function () {
       feedbackError.style.display = "block";
       return;
     }
-  
+
     feedbackError.textContent = "";
     feedbackError.style.display = "none";
     console.log("Feedback:", selectedFeedback, "Reden:", reason);
     closeFeedbackPopup();
   });
-    
+
   function closeFeedbackPopup() {
     feedbackPopup.style.display = "none";
     feedbackOverlay.style.display = "none";
@@ -365,8 +367,28 @@ document.addEventListener("DOMContentLoaded", function () {
     dislikeIcon.style.color = "";
     document.getElementById("feedbackReason").value = "";
   }
-  
-    // main();
-  });
-  
 
+  // main();
+});
+
+async function saveSuddenDeathResult(score) {
+  try {
+    const response = await fetch("/save-result", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        gameMode: "sudden_death",
+        score: score,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP-fout! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Sudden death score opgeslagen:", data);
+  } catch (err) {
+    console.error("Fout bij opslaan sudden death score:", err);
+  }
+}
