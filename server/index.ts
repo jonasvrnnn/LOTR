@@ -77,6 +77,35 @@ app.get("/profile/edit", async (req, res) => {
     res.redirect("/profile");
   }
 });
+app.get("/statistics", requireLogin, async (req, res) => {
+  const username = req.session.user?.username;
+  if (!username) {
+    return res.redirect("/login");
+  }
+
+  // Voorbeeld: resultaten ophalen uit db.collection('results') (pas aan naar jouw database structuur)
+  const results = await db.collection("results").find({ username }).toArray();
+
+  // Bereken highscores
+  let suddenDeathHighscore = 0;
+  let tenRoundsHighscore = 0;
+
+  results.forEach((result) => {
+    if (result.gameMode === "sudden_death") {
+      if (result.score > suddenDeathHighscore)
+        suddenDeathHighscore = result.score;
+    }
+    if (result.gameMode === "ten_rounds") {
+      if (result.score > tenRoundsHighscore) tenRoundsHighscore = result.score;
+    }
+  });
+
+  res.render("statistics", {
+    suddenDeathHighscore,
+    tenRoundsHighscore,
+    allResults: results,
+  });
+});
 
 //post requests
 

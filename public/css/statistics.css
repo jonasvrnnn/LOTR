@@ -15,22 +15,15 @@ body {
   color: #eeeed4;
   font-family: "Ringbearer", cursive;
   text-align: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
   position: relative;
 }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/*mist op de achtergrond*/
 .mist,
 .mist-layer2 {
   position: absolute;
@@ -49,98 +42,83 @@ body {
 .mist-layer2 {
   opacity: 0.1;
   animation: mistMove2 60s linear infinite;
-  z-index: 1;
-}
-
-.container {
-  max-width: 800px;
-  margin: 50px auto;
-  background: rgba(41, 34, 33, 0.9);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0px 0px 15px rgba(211, 209, 174, 0.6);
-  position: relative;
-  z-index: 2;
 }
 
 h1 {
-  font-family: "Ringbearer";
-  font-size: 2.5em;
+  font-size: 2.5rem;
+  margin-top: 50px;
   color: #d3d1ae;
+  z-index: 2;
 }
 
-/*keuwe buttons voor de quiz en highscore*/
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 55px;
-  margin-top: 20px;
+section {
+  background: rgba(41, 34, 33, 0.9);
+  margin: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow: 0px 0px 15px rgba(211, 209, 174, 0.6);
+  z-index: 2;
 }
 
-.ring {
-  width: 150px;
-  height: 150px;
-  background: #c3ccac;
-  border-radius: 50%;
-  display: flex;
-  font-family: "Ringbearer", cursive;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2em;
-  border: 5px solid #656152;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.ring:hover {
-  background: #3c4c3a;
-  color: #eeeed4;
-  box-shadow: 0 0 15px rgba(195, 204, 172, 0.8);
-  transform: scale(1.1);
-}
-
-.return-button {
-  margin-top: 1.7rem;
+h2 {
+  color: #c3ccac;
   margin-bottom: 15px;
-  padding: 10px 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+table,
+th,
+td {
+  border: 1px solid #656152;
+}
+
+th,
+td {
+  padding: 10px;
+  background-color: #292221;
+}
+
+th {
+  background-color: #3c4c3a;
+  color: #eeeed4;
+}
+
+button {
+  margin: 2rem 0;
+  padding: 10px 25px;
   background-color: #3c4c3a;
   color: #eeeed4;
   font-family: "Ringbearer", cursive;
-  font-size: 0, 5rem;
+  font-size: 1rem;
   border: 3px solid #656152;
   border-radius: 8px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(211, 209, 174, 0.5);
   transition: all 0.3s ease;
-  position: relative;
   z-index: 2;
 }
 
-.return-button:hover {
+button:hover {
   background-color: #c3ccac;
   color: #3c4c3a;
-  box-shadow: 0 0 15px rgba(195, 204, 172, 0.8);
   transform: scale(1.05);
-}
-.button-column {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  gap: 12px; /* ruimte tussen de knoppen */
-  max-width: 200px; /* optioneel, om breedte te limiteren */
-  margin-top: 20px; /* optioneel, wat ruimte boven deze knoppen */
+  box-shadow: 0 0 15px rgba(195, 204, 172, 0.8);
 }
 
 @keyframes mistMove {
   0% {
     transform: translateX(-5%) translateY(-5%);
   }
-
   50% {
     transform: translateX(5%) translateY(5%);
   }
-
   100% {
     transform: translateX(-5%) translateY(-5%);
   }
@@ -150,11 +128,9 @@ h1 {
   0% {
     transform: translateX(5%) translateY(-5%);
   }
-
   50% {
     transform: translateX(-5%) translateY(5%);
   }
-
   100% {
     transform: translateX(5%) translateY(-5%);
   }
