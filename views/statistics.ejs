@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Statistieken</title>
+  <link rel="stylesheet" href="/css/statistics.css" />
+</head>
+
+<body>
+  <h1>Statistieken</h1>
+
+  <section>
+    <div class="mist"></div>
+    <div class="mist-layer2"></div>
+
+    <h2>Highscores</h2>
+    <p>Sudden Death hoogste score: <strong><%= suddenDeathHighscore %></strong> vragen behaald zonder fout</p>
+    <p>10 Rounds hoogste score: <strong><%= tenRoundsHighscore %></strong> punten</p>
+  </section>
+
+  <section>
+    <h2>Overzicht van al je gespeelde quizsessies</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Gamemode</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% allResults.forEach(result => { %>
+          <tr>
+            <td><%= new Date(result.date).toLocaleString("nl-NL") %></td>
+            <td><%= result.gameMode %></td>
+            <td><%= result.score %></td>
+            <td><%= result.duration ? result.duration + " sec" : "-" %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <button onclick="window.location.href='/gameMode'">Terug naar gamemode</button>
+</body>
+
+</html>

@@ -21,13 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const introText = document.getElementById("introText");
   const introTitle = document.getElementById("introTitle");
   const feedbackIcon = document.getElementById("feedbackIcon");
-const feedbackPopup = document.getElementById("feedbackPopup");
-const feedbackOverlay = document.getElementById("feedbackOverlay");
-const closeFeedback = document.getElementById("closeFeedback");
-const sendFeedback = document.getElementById("sendFeedback");
-const likeIcon = document.getElementById("likeIcon");
-const dislikeIcon = document.getElementById("dislikeIcon");
-const errorEl = document.getElementById("feedbackError");
+  const feedbackPopup = document.getElementById("feedbackPopup");
+  const feedbackOverlay = document.getElementById("feedbackOverlay");
+  const closeFeedback = document.getElementById("closeFeedback");
+  const sendFeedback = document.getElementById("sendFeedback");
+  const likeIcon = document.getElementById("likeIcon");
+  const dislikeIcon = document.getElementById("dislikeIcon");
+  const errorEl = document.getElementById("feedbackError");
 
   let quotes = [];
   let characters = [];
@@ -44,7 +44,6 @@ const errorEl = document.getElementById("feedbackError");
   let checkMode = true;
   startButton.disabled = true;
   let selectedFeedback = null;
-
 
   const motivationalMessages = [
     "Je hebt de wijsheid van Gandalf! Goed gedaan 🧙‍♂️!",
@@ -70,7 +69,6 @@ const errorEl = document.getElementById("feedbackError");
     "Sauron zag je fout en lacht vanuit Barad-dûr! 🔥",
     "De Nazgûl naderen... Wees voorzichtig! 🐉",
   ];
-
 
   const dataDiv = document.getElementById("game-data");
   if (!dataDiv) {
@@ -183,12 +181,14 @@ const errorEl = document.getElementById("feedbackError");
     } while (gebruikteQuotes.includes(vraagInhoud._id));
 
     gebruikteQuotes.push(vraagInhoud._id);
-    vraagElement.innerHTML = `Vraag ${huidigeVraagIndex + 1}: ${vraagInhoud.dialog} <ion-icon id="feedbackIcon" name="chatbubble-ellipses-outline" style="font-size: 28px; cursor: pointer; margin-left: 10px;" tabindex="0" role="button"></ion-icon>`;
+    vraagElement.innerHTML = `Vraag ${huidigeVraagIndex + 1}: ${
+      vraagInhoud.dialog
+    } <ion-icon id="feedbackIcon" name="chatbubble-ellipses-outline" style="font-size: 28px; cursor: pointer; margin-left: 10px;" tabindex="0" role="button"></ion-icon>`;
     document.querySelector("#feedbackIcon")?.addEventListener("click", () => {
       feedbackPopup.style.display = "block";
       feedbackOverlay.style.display = "block";
     });
-    
+
     juisteCharacterId = vraagInhoud.character;
     juisteMovieId = vraagInhoud.movie;
 
@@ -227,7 +227,8 @@ const errorEl = document.getElementById("feedbackError");
       knop.onclick = () => selecteerMovie(knop, antwoordenMovies[index]._id);
     });
 
-    nextButton.innerHTML = '<ion-icon name="checkmark"style="font-size: 40px;"></ion-icon>';
+    nextButton.innerHTML =
+      '<ion-icon name="checkmark"style="font-size: 40px;"></ion-icon>';
     checkMode = true;
   }
 
@@ -295,7 +296,8 @@ const errorEl = document.getElementById("feedbackError");
 
       showFailMessage();
     }
-nextButton.innerHTML = '<ion-icon name="arrow-forward-outline" style="font-size: 32px;"></ion-icon>';
+    nextButton.innerHTML =
+      '<ion-icon name="arrow-forward-outline" style="font-size: 32px;"></ion-icon>';
     checkMode = false;
   }
 
@@ -333,57 +335,43 @@ nextButton.innerHTML = '<ion-icon name="arrow-forward-outline" style="font-size:
   });
 
   // herstart knop voor na de quiz
-restartButton.addEventListener("click", function () {
-    score = 0;
-    huidigeVraagIndex = 0;
-    gebruikteQuotes = [];
-
-    [...characterKnoppen, ...movieKnoppen].forEach((knop) => {
-      knop.style.display = "inline-block";
-      knop.disabled = false;
-    });
-
-    nextButton.style.display = "inline-block";
-    toonMelding("");
-
+  restartButton.addEventListener("click", function () {
     laadVraag();
-    
   });
   feedbackOverlay.addEventListener("click", closeFeedbackPopup);
-closeFeedback.addEventListener("click", closeFeedbackPopup);
+  closeFeedback.addEventListener("click", closeFeedbackPopup);
 
-likeIcon.addEventListener("click", () => {
-  selectedFeedback = "like";
-  likeIcon.style.color = "green";
-  dislikeIcon.style.color = "";
-});
+  likeIcon.addEventListener("click", () => {
+    selectedFeedback = "like";
+    likeIcon.style.color = "green";
+    dislikeIcon.style.color = "";
+  });
 
-dislikeIcon.addEventListener("click", () => {
-  selectedFeedback = "dislike";
-  dislikeIcon.style.color = "red";
-  likeIcon.style.color = "";
-});
+  dislikeIcon.addEventListener("click", () => {
+    selectedFeedback = "dislike";
+    dislikeIcon.style.color = "red";
+    likeIcon.style.color = "";
+  });
 
-sendFeedback.addEventListener("click", () => {
-  if (!selectedFeedback || !reason) {
-    errorEl.textContent = "Kies een reactie en geef een reden op.";
-    errorEl.style.display = "block";
-    return;
-  }
-  errorEl.textContent = "";
-  errorEl.style.display = "none";
+  sendFeedback.addEventListener("click", () => {
+    if (!selectedFeedback || !reason) {
+      errorEl.textContent = "Kies een reactie en geef een reden op.";
+      errorEl.style.display = "block";
+      return;
+    }
+    errorEl.textContent = "";
+    errorEl.style.display = "none";
     console.log("Feedback:", selectedFeedback, "Reden:", reason);
-  closeFeedbackPopup();
-});
-function closeFeedbackPopup() {
-  feedbackPopup.style.display = "none";
-  feedbackOverlay.style.display = "none";
-  selectedFeedback = null;
-  likeIcon.style.color = "";
-  dislikeIcon.style.color = "";
-  document.getElementById("feedbackReason").value = "";
-}
+    closeFeedbackPopup();
+  });
+  function closeFeedbackPopup() {
+    feedbackPopup.style.display = "none";
+    feedbackOverlay.style.display = "none";
+    selectedFeedback = null;
+    likeIcon.style.color = "";
+    dislikeIcon.style.color = "";
+    document.getElementById("feedbackReason").value = "";
+  }
 
   // main();
 });
-

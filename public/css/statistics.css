@@ -1,0 +1,137 @@
+@font-face {
+  font-family: "Aniron";
+  src: url("../fonts/aniron/anirb___.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Ringbearer";
+  src: url("../fonts/ringbearer/RINGM___.TTF") format("truetype");
+}
+
+body {
+  background: url("/images/game_mode/background_pic_landingpage.jpg") no-repeat
+    center center/cover;
+  background-size: cover;
+  color: #eeeed4;
+  font-family: "Ringbearer", cursive;
+  text-align: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.mist,
+.mist-layer2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/images/game_mode/mist_landingpage.webp") repeat;
+  background-size: cover;
+  opacity: 0.15;
+  animation: mistMove 40s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mist-layer2 {
+  opacity: 0.1;
+  animation: mistMove2 60s linear infinite;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-top: 50px;
+  color: #d3d1ae;
+  z-index: 2;
+}
+
+section {
+  background: rgba(41, 34, 33, 0.9);
+  margin: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow: 0px 0px 15px rgba(211, 209, 174, 0.6);
+  z-index: 2;
+}
+
+h2 {
+  color: #c3ccac;
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+table,
+th,
+td {
+  border: 1px solid #656152;
+}
+
+th,
+td {
+  padding: 10px;
+  background-color: #292221;
+}
+
+th {
+  background-color: #3c4c3a;
+  color: #eeeed4;
+}
+
+button {
+  margin: 2rem 0;
+  padding: 10px 25px;
+  background-color: #3c4c3a;
+  color: #eeeed4;
+  font-family: "Ringbearer", cursive;
+  font-size: 1rem;
+  border: 3px solid #656152;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(211, 209, 174, 0.5);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+button:hover {
+  background-color: #c3ccac;
+  color: #3c4c3a;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(195, 204, 172, 0.8);
+}
+
+@keyframes mistMove {
+  0% {
+    transform: translateX(-5%) translateY(-5%);
+  }
+  50% {
+    transform: translateX(5%) translateY(5%);
+  }
+  100% {
+    transform: translateX(-5%) translateY(-5%);
+  }
+}
+
+@keyframes mistMove2 {
+  0% {
+    transform: translateX(5%) translateY(-5%);
+  }
+  50% {
+    transform: translateX(-5%) translateY(5%);
+  }
+  100% {
+    transform: translateX(5%) translateY(-5%);
+  }
+}

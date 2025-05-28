@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'Aniron';
-  src: url('../fonts/aniron/anirb___.ttf') format('truetype');
+  font-family: "Aniron";
+  src: url("../fonts/aniron/anirb___.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Ringbearer';
-  src: url('../fonts/ringbearer/RINGM___.TTF') format('truetype');
+  font-family: "Ringbearer";
+  src: url("../fonts/ringbearer/RINGM___.TTF") format("truetype");
 }
 
 body {
@@ -107,7 +107,7 @@ h1 {
   background-color: #3c4c3a;
   color: #eeeed4;
   font-family: "Ringbearer", cursive;
-  font-size: 0,5rem;
+  font-size: 0, 5rem;
   border: 3px solid #656152;
   border-radius: 8px;
   cursor: pointer;
@@ -122,6 +122,14 @@ h1 {
   color: #3c4c3a;
   box-shadow: 0 0 15px rgba(195, 204, 172, 0.8);
   transform: scale(1.05);
+}
+.button-column {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 12px; /* ruimte tussen de knoppen */
+  max-width: 200px; /* optioneel, om breedte te limiteren */
+  margin-top: 20px; /* optioneel, wat ruimte boven deze knoppen */
 }
 
 @keyframes mistMove {

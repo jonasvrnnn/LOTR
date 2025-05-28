@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bewerk Profiel</title>
+  <link rel="stylesheet" href="/css/register.css" />
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <h1>Bewerk je profiel</h1>
+
+    <form method="POST" action="/profile/edit" autocomplete="off">
+      <div class="form-group">
+        <label for="displayName">Weergavenaam:</label>
+        <input type="text" name="displayName" id="displayName" value="<%= user.displayName || '' %>" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" name="email" id="email" value="<%= user.email %>" required />
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfBirth">Geboortedatum:</label>
+        <input type="date" name="dateOfBirth" id="dateOfBirth" value="<%= user.dateOfBirth ? user.dateOfBirth.toISOString().split('T')[0] : '' %>" required />
+      </div>
+
+      <div class="form-group">
+        <label for="country">Land:</label>
+        <input type="text" name="country" id="country" value="<%= user.country %>" required />
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Geslacht:</label>
+        <select name="gender" id="gender">
+          <option value="" <%= !user.gender ? 'selected' : '' %>>Niet opgegeven</option>
+          <option value="male" <%= user.gender === 'male' ? 'selected' : '' %>>Man</option>
+          <option value="female" <%= user.gender === 'female' ? 'selected' : '' %>>Vrouw</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Telefoonnummer:</label>
+        <input type="tel" name="phoneNumber" id="phoneNumber" value="<%= user.phoneNumber || '' %>" />
+      </div>
+
+      <button type="submit" class="login-button">Opslaan</button>
+    </form>
+
+    <p><a href="/profile">Terug naar profiel</a></p>
+  </div>
+</body>
+</html>

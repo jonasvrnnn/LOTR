@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= user.username %>'s Profiel</title>
+  <link rel="stylesheet" href="/css/profile.css" />
+</head>
+<body class="profile-page">
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="avatar">
+        <span><%= (user.username[0] || "U").toUpperCase() %></span>
+      </div>
+      <div class="header-info">
+        <h1><%= user.displayName || user.username %></h1>
+        <p class="tag">@<%= user.username %></p>
+        <a href="/profile/edit" class="edit-profile-link">Bewerk profiel</a>
+      </div>
+    </div>
+
+    <div class="profile-details">
+      <ul>
+        <li><strong>Email:</strong> <%= user.email %></li>
+        <li><strong>Geboortedatum:</strong> <%= new Date(user.dateOfBirth).toLocaleDateString('nl-BE') %></li>
+        <li><strong>Land:</strong> <%= user.country %></li>
+        <li><strong>Geslacht:</strong> <%= user.gender || "Niet opgegeven" %></li>
+        <li><strong>Telefoonnummer:</strong> <%= user.phoneNumber || "Niet opgegeven" %></li>
+        <li><strong>Account aangemaakt op:</strong> <%= new Date(user.createdAt).toLocaleDateString('nl-BE') %></li>
+      </ul>
+    </div>
+    
+    <form action="/logout" method="POST">
+      <button type="submit" class="logout-button">Uitloggen</button>
+    </form>
+    <button class="back-button" onclick="window.location.href='/'">Terug</button>
+  </div>
+</body>
+</html>
