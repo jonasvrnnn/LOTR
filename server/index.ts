@@ -31,6 +31,8 @@ app.get("/sudden_death", async (req, res) => {
   res.render("game", {
     gameMode: "sudden_death",
     gameData: encodeURIComponent(JSON.stringify(gameData)),
+    explanation: `<p>Je krijgt vragen één voor één en hebt 30 seconden per vraag om te antwoorden. Maar pas op: als je één fout maakt, is het game over! Hoe ver kun jij komen? Succes!</p>
+    <p>Denk goed na, speel tactisch en probeer zover mogelijk te komen. Succes!</p>`,
   });
 });
 
@@ -39,6 +41,8 @@ app.get("/ten_rounds", async (req, res) => {
   res.render("game", {
     gameMode: "ten_rounds",
     gameData: encodeURIComponent(JSON.stringify(gameData)),
+    explanation: `<p>Je krijgt 10 vragen en hebt 30 seconden per vraag om te antwoorden. Probeer zoveel mogelijk correcte antwoorden te geven binnen de tijd. Veel succes!</p>
+    <p>Beantwoord zoveel mogelijk vragen correct om een hoge score te behalen. Als de tijd om is, ga je automatisch naar de volgende vraag. Succes!</p>`,
   });
 });
 
