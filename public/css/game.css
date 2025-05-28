@@ -1,7 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap");
+@font-face {
+  font-family: 'Aniron';
+  src: url('../fonts/aniron/anirb___.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Ringbearer';
+  src: url('../fonts/ringbearer/RINGM___.TTF') format('truetype');
+}
+
+h1, button {
+  font-family: 'Ringbearer', serif;
+}
 
 body {
-  font-family: "Uncial Antiqua", serif;
+  font-family: 'Ringbearer', serif;
   background-color: #292221;
   color: #eeeed4;
   text-align: center;
@@ -29,7 +40,7 @@ button {
   border: 3px solid #d3d1ae;
   color: #eeeed4;
   font-size: 22px;
-  font-family: "Uncial Antiqua", serif;
+  font-family: 'Ringbearer', serif;
   padding: 15px 35px;
   border-radius: 40px;
   text-transform: uppercase;
@@ -97,6 +108,7 @@ button:active {
 }
 
 .btn {
+  font-family: "Aniron";
   font-size: 0.8rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -231,3 +243,16 @@ button.wrong {
   text-align: center; /* Zorg ervoor dat de tekst gecentreerd is */
   font-weight: bold; /* Maak de tekst dikgedrukt voor meer impact */
 }
+
+#introText {
+  font-size: 28px;          /* veel groter */
+  max-width: 700px;         /* niet te breed */
+  margin: 30px auto 150px;   /* horizontaal gecentreerd, ruim boven en onder */
+  
+  line-height: 1.5;
+  font-weight: 600;
+  user-select: none;
+  text-align:unset;       /* tekst centreren */
+  color: #eeeed4;           /* dezelfde kleur als je tekst */
+}
+

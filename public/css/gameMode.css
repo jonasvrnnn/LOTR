@@ -1,11 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap");
+@font-face {
+  font-family: 'Aniron';
+  src: url('../fonts/aniron/anirb___.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Ringbearer';
+  src: url('../fonts/ringbearer/RINGM___.TTF') format('truetype');
+}
 
 body {
   background: url("/images/game_mode/background_pic_landingpage.jpg") no-repeat
     center center/cover;
   background-size: cover;
   color: #eeeed4;
-  font-family: "Uncial Antiqua", cursive;
+  font-family: "Ringbearer", cursive;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -56,6 +64,7 @@ body {
 }
 
 h1 {
+  font-family: "Ringbearer";
   font-size: 2.5em;
   color: #d3d1ae;
 }
@@ -75,7 +84,7 @@ h1 {
   background: #c3ccac;
   border-radius: 50%;
   display: flex;
-  font-family: "Uncial Antiqua", cursive;
+  font-family: "Ringbearer", cursive;
   align-items: center;
   justify-content: center;
   font-size: 1.2em;
@@ -97,8 +106,8 @@ h1 {
   padding: 10px 20px;
   background-color: #3c4c3a;
   color: #eeeed4;
-  font-family: "Uncial Antiqua", cursive;
-  font-size: 1em;
+  font-family: "Ringbearer", cursive;
+  font-size: 0,5rem;
   border: 3px solid #656152;
   border-radius: 8px;
   cursor: pointer;

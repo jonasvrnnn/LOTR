@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const characterKnoppen = document.querySelectorAll(".twee");
   const nextButton = document.querySelector(".next");
   const motivationalSection = document.getElementById("motivationalMessage");
+  const introText = document.getElementById("introText");
+  const introTitle = document.getElementById("introTitle");
 
   // Variabele
   let quotes = [];
@@ -290,10 +292,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   startButton.addEventListener("click", function () {
     startButton.style.display = "none";
+
     backToMenuButton.style.display = "none";
     quizContainer.style.display = "block";
     controlButtons.style.display = "block";
     //restartButton.style.display = "none";
+    introTitle.style.display = "none";
+    introText.style.display = "none";
+
     startAudio();
     laadVraag();
   });
