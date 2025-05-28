@@ -12,25 +12,67 @@
     <h1>Registreren</h1>
     <h2>Maak een account aan</h2>
 
-    <form class="register-form" method="post">
-      <div class="form-group">
-        <label for="username">Gebruikersnaam:</label>
-        <input type="text" name="username" id="username" required />
-      </div>
+    <!-- Formulier met id voor JS -->
+    <form id="registerForm" class="register-form" method="POST" action="/register" autocomplete="off">
+  <div class="form-group">
+    <label for="username">Gebruikersnaam:</label>
+    <input type="text" name="username" id="username" required autocomplete="off" />
+  </div>
 
-      <div class="form-group">
-        <label for="password">Wachtwoord:</label>
-        <input type="password" name="password" id="password" required />
-      </div>
+  <div class="form-group">
+    <label for="email">E-mail:</label>
+    <input type="email" name="email" id="email" required autocomplete="email" />
+  </div>
 
-      <div class="form-group">
-        <label for="confirmPassword">Herhaal wachtwoord:</label>
-        <input type="password" name="confirmPassword" id="confirmPassword" required />
-      </div>
+  <div class="form-group">
+    <label for="dateOfBirth">Geboortedatum:</label>
+    <input type="date" name="dateOfBirth" id="dateOfBirth" required />
+  </div>
 
-      <button type="submit" class="login-button">Registreren</button>
-      <button type="button" class="back-button" onclick="window.location.href = '/login'">Terug naar login</button>
-    </form>
+  <div class="form-group">
+    <label for="country">Land:</label>
+    <select name="country" id="country" required>
+      <option value="">Selecteer je land</option>
+      <option value="NL">Nederland</option>
+      <option value="BE">België</option>
+      <option value="DE">Duitsland</option>
+      <option value="US">Verenigde Staten</option>
+      <!-- Voeg meer landen toe -->
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="gender">Geslacht (optioneel):</label>
+    <select name="gender" id="gender">
+      <option value="">--</option>
+      <option value="Man">Man</option>
+      <option value="Vrouw">Vrouw</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="displayName">Toonnaam (optioneel):</label>
+    <input type="text" name="displayName" id="displayName" autocomplete="off" />
+  </div>
+
+  <div class="form-group">
+    <label for="phoneNumber">Telefoonnummer (optioneel):</label>
+    <input type="tel" name="phoneNumber" id="phoneNumber" autocomplete="tel" />
+  </div>
+
+  <div class="form-group">
+    <label for="password">Wachtwoord:</label>
+    <input type="password" name="password" id="password" required autocomplete="new-password" />
+  </div>
+
+  <div class="form-group">
+    <label for="confirmPassword">Herhaal wachtwoord:</label>
+    <input type="password" name="confirmPassword" id="confirmPassword" required autocomplete="new-password" />
+  </div>
+
+  <button type="submit" class="login-button" disabled>Registreren</button>
+  <button type="button" class="back-button" onclick="window.location.href = '/login'">Terug naar login</button>
+</form>
   </div>
 </body>
 </html>

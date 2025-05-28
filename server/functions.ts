@@ -1,6 +1,5 @@
 import { Movie, Quote, Character } from "./interface";
 import { Db } from "mongodb";
-
 const API_HEADERS = {
   Accept: "application/json",
   Authorization: "Bearer UCTCCx7EBG3IuHh7Cfst",
@@ -95,4 +94,11 @@ export async function loadGameData(db: Db): Promise<{
 
   // Data teruggeven zodat route het kan gebruiken
   return { quotes, characters, movies };
+}
+
+export function requireLogin(req: any, res: any, next: any) {
+  if (req.session && req.session.user) {
+    return next();
+  }
+  return res.redirect("/login");
 }

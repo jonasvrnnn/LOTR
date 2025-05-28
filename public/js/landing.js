@@ -4,7 +4,7 @@ function selectProject(projectName) {
   if (projectName === "Lord of the Rings") {
     setTimeout(() => {
       window.location.href = "/gameMode";
-    }, 2300);
+    }, 200);
   }
 }
 
@@ -18,5 +18,5 @@ projects.forEach((project) => {
 });
 
 function login() {
-  window.location.href = "/login";
+  window.location.href = "/profile";
 }

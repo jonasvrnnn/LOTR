@@ -1,0 +1,128 @@
+body {
+  background-image: url("/images/landing/blauw.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.profile-container {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 3rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  width: 100%;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  margin-right: 1.5rem;
+}
+
+.header-info h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: white;
+}
+
+.header-info .tag {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-top: 0.3rem;
+}
+
+.profile-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-details li {
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.profile-details li strong {
+  display: inline-block;
+  width: 160px;
+  color: #e0e0e0;
+}
+
+.logout-button {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: #000;
+  color: white;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #222;
+}
+
+.back-button {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #222;
+}
+
+.edit-profile-link {
+  font-size: 0.85rem;
+  color: #ccc;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 0.3rem;
+  display: inline-block;
+}
+
+.edit-profile-link:hover {
+  color: white;
+}

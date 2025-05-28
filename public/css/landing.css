@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap");
+/* Geen Uncial Antiqua meer, dus geen import */
 
 body {
   background: #3b2f2f;
   color: #eeeed4;
-  font-family: "Uncial Antiqua", cursive;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -59,6 +59,7 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  font-family: "Roboto", Arial, Helvetica, sans-serif; /* toegevoegd */
 }
 
 .project:hover,
@@ -76,6 +77,8 @@ body {
   position: absolute;
   bottom: 0;
   transition: background 0.3s ease;
+  font-family: "Roboto", Arial, Helvetica, sans-serif; /* toegevoegd */
+  font-weight: 600;
 }
 
 .project:hover .project-title {
@@ -86,18 +89,23 @@ body {
   position: absolute;
   top: 15px;
   right: 65px;
-  background: #464038;
-  color: #eeeed4;
-  padding: 5px 10px;
-  border-radius: 3px;
+  background: black; /* donkergrijs */
+  color: #eee; /* lichtgrijs/wit */
+  padding: 8px 15px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 0.9em;
-  border: none;
-  transition: 0.3s;
+  font-size: 1.1em;
+  border: 2px solid #eee;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
 
 .login-button:hover {
-  background: #3c4c3a;
+  background: #eee;
+  color: #444;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
 }
 
 /* RESPONSIVE DESIGN */

@@ -363,7 +363,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // herstart knop voor na de quiz
   restartButton.addEventListener("click", function () {
-    
     laadVraag();
   });
   // main();
