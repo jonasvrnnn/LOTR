@@ -11,26 +11,36 @@
 
 <body>
 
-    <h1><%=gameMode%></h1>
-    <button class="beginKnop" id="startButton">Start de Quiz</button>
-    <button onclick="window.location.href = '/gameMode';" class="beginKnop" id="backToMenuButton">Terug
-        naar Menu</button>
-    <section id="quizContainer" style="display: none;">
+    <h1 id="introTitle">
+        <% if (gameMode === "ten_rounds") { %>
+          Ten Rounds
+        <% } else if (gameMode === "sudden_death") { %>
+          Sudden Death
+        <% } else { %>
+          <%= gameMode %>
+        <% } %>
+      </h1>
+          <div id="introText">
+        <%- explanation %>
+        <button class="beginKnop" id="startButton">Start de Quiz</button>
+        <button onclick="window.location.href = '/gameMode';" class="beginKnop" id="backToMenuButton">Terug naar Menu</button>
+      </div>
+      
+      <section id="quizContainer" style="display: none;">
         <header>
-            <h2 id="quote"></h2>
+          <h2 id="quote"></h2>
         </header>
         <div id="buttons">
-            <button class="btn een"></button>
-            <button class="btn twee"></button>
-            <button class="btn een"></button>
-            <button class="btn twee"></button>
-            <button class="btn een"></button>
-            <button class="btn twee"></button>
+          <button class="btn een"></button>
+          <button class="btn twee"></button>
+          <button class="btn een"></button>
+          <button class="btn twee"></button>
+          <button class="btn een"></button>
+          <button class="btn twee"></button>
         </div>
         <button id="submitAnswer" class="next">Volgende</button>
         <section id="motivationalMessage" style="margin-top: 20px;"></section>
-    </section>
-
+      </section>
     <section id="controlButtons" style="display: none; margin-top: 20px;">
         <button id="exitButton">Verlaten</button>
         <button id="restartButton">Herstart</button>

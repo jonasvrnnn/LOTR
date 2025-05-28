@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const movieKnoppen = document.querySelectorAll(".een");
   const nextButton = document.querySelector(".next");
   const motivationalSection = document.getElementById("motivationalMessage");
+  const introText = document.getElementById("introText");
+  const introTitle = document.getElementById("introTitle");
 
   let quotes = [];
   let characters = [];
@@ -273,6 +275,9 @@ document.addEventListener("DOMContentLoaded", function () {
     backToMenuButton.style.display = "none";
     quizContainer.style.display = "block";
     controlButtons.style.display = "block";
+    introTitle.style.display = "none";
+    introText.style.display = "none";
+
     startAudio();
     huidigeVraagIndex = 0;
     score = 0;
@@ -319,6 +324,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // herstart knop voor na de quiz
   restartButton.addEventListener("click", function () {
+    
     laadVraag();
   });
   main();

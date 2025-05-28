@@ -1,62 +1,74 @@
-.login-page {
+body {
+    background-image: url("/images/landing/blauw.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .login-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url("/images/background.jpg") no-repeat center center fixed;
-    background-size: cover;
     padding: 2rem;
-    font-family: Arial, sans-serif;
   }
   
   .login-container {
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 2.5rem 3rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.3); 
+    padding: 4rem; /* padding groter gemaakt */
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     width: 100%;
-    max-width: 400px;
-    text-align: center;
+    max-width: 450px;
+    text-align: left;
+    backdrop-filter: blur(10px);
   }
   
   h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    color: #000;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
+    color: white;
+    text-align: center;
   }
   
   h2 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: 2rem;
-    color: #333;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
+    color: #e0e0e0;
+    text-align: center;
   }
   
   label {
     font-weight: 600;
+    display: block;
     margin-bottom: 0.5rem;
-    color: #000;
+    margin-top: 1rem;
+    color: #e0e0e0;
   }
   
-  input[type="text"],
-  input[type="password"] {
+  #username,
+  #password,
+  #confirmPassword {
     width: 100%;
-    padding: 0.75rem;
+    padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
-    transition: border 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
   }
   
-  input[type="text"]:focus,
-  input[type="password"]:focus {
-    border-color: #000;
+  #username::placeholder,
+  #password::placeholder,
+  #confirmPassword::placeholder {
+    color: #ccc;
+  }
+  
+  #username:focus,
+  #password:focus,
+  #confirmPassword:focus {
+    border-color: white;
     outline: none;
   }
   
@@ -66,35 +78,64 @@
     height: 1em;
   }
   
-  .login-button,
-  .back-button {
+  .login-button {
     width: 100%;
-    padding: 0.75rem;
-    margin-top: 0.5rem;
-    font-size: 1rem;
+    padding: 0.85rem;
+    margin-top: 1.5rem;
+    font-size: 1.05rem;
     font-weight: 600;
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    background-color: #000;
+    color: white;
     transition: background-color 0.3s ease;
   }
   
-  .login-button {
-    background-color: #000;
-    color: white;
-    margin-bottom: 0.75rem;
-  }
-  
   .login-button:hover {
-    background-color: #333;
+    background-color: #222;
   }
   
-  .back-button {
-    background-color: #666;
+  p {
+    margin-top: 2rem;
+    text-align: center;
+    color: #cccccc;
+    font-size: 0.95rem;
+  }
+  
+  p a {
     color: white;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  
+  p a:hover {
+    color: #dddddd;
+  }
+  .back-button {
+    width: 100%;
+    padding: 0.85rem;
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   .back-button:hover {
-    background-color: #444;
+    background-color: white;
+    color: black;
   }
-  
+/* Voor loginformulier – iets minder ruimte tussen velden */
+.login-form .form-group {
+  margin-bottom: 1rem;
+}
+
+/* Voor registerformulier – meer ruimte tussen de 3 velden */
+.register-form .form-group {
+  margin-bottom: 3rem;
+}
