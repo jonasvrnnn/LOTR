@@ -22,6 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const motivationalSection = document.getElementById("motivationalMessage");
   const introText = document.getElementById("introText");
   const introTitle = document.getElementById("introTitle");
+  const feedbackIcon = document.getElementById("feedbackIcon");
+  const feedbackOverlay = document.getElementById("feedbackOverlay");
+  const feedbackPopup = document.getElementById("feedbackPopup");
+  const closeFeedback = document.getElementById("closeFeedback");
+  const sendFeedback = document.getElementById("sendFeedback");
+  const likeIcon = document.getElementById("likeIcon");
+  const dislikeIcon = document.getElementById("dislikeIcon");
+  const feedbackReason = document.getElementById("feedbackReason");
+  const feedbackError = document.getElementById("feedbackError");
 
   // Variabele
   let quotes = [];
@@ -35,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let juisteCharacterId = null;
   let juisteMovieId = null;
   let checkMode = true;
+  let selectedFeedback = null;
   startButton.disabled = true;
   const motivationalMessages = [
     "Je hebt de wijsheid van Gandalf! Goed gedaan 🧙‍♂️!",
@@ -61,11 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "Sauron zag je fout en lacht vanuit Barad-dûr! 🔥",
     "De Nazgûl naderen... Wees voorzichtig! 🐉",
   ];
-
-  // const headers = {
-  //   Accept: "application/json",
-  //   Authorization: "Bearer UCTCCx7EBG3IuHh7Cfst",
-  // };
 
   const dataDiv = document.getElementById("game-data");
   if (!dataDiv) {
@@ -149,8 +154,21 @@ document.addEventListener("DOMContentLoaded", function () {
     } while (gebruikteQuotes.includes(vraagInhoud._id));
 
     gebruikteQuotes.push(vraagInhoud._id);
-    vraagElement.textContent = vraagInhoud.dialog;
-
+    vraagElement.innerHTML =
+    `${vraagInhoud.dialog} <ion-icon id="feedbackIcon" 
+       name="chatbubble-ellipses-outline"
+       style="font-size:28px;cursor:pointer;margin-left:10px;"
+       tabindex="0" role="button"></ion-icon>`;
+       setTimeout(() => {
+        const newFeedbackIcon = document.getElementById("feedbackIcon");
+        if (newFeedbackIcon) {
+          newFeedbackIcon.addEventListener("click", () => {
+            feedbackPopup.style.display = "block";
+            feedbackOverlay.style.display = "block";
+          });
+        }
+      }, 0);
+      
     juisteCharacterId = vraagInhoud.character;
     const juisteCharacter = characters.find((c) => c._id === juisteCharacterId);
 
@@ -192,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
       knop.onclick = () => selecteerMovie(knop, antwoordenMovies[index]._id);
     });
 
-    nextButton.textContent = "Check";
+    nextButton.innerHTML = '<ion-icon name="checkmark"style="font-size: 40px;"></ion-icon>';
     checkMode = true;
     geselecteerdeKnop = null;
   }
@@ -237,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "linear-gradient(to bottom, #2d8f2d, #1e691e)";
       geselecteerdeMovie.knop.style.color = "white";
       score++;
-      nextButton.textContent = "Next";
+      nextButton.innerHTML = '<ion-icon name="arrow-forward-outline" style="font-size: 32px;"></ion-icon>';
       checkMode = false;
       showMotivationalMessage();
     } else {
@@ -304,46 +322,51 @@ document.addEventListener("DOMContentLoaded", function () {
     laadVraag();
   });
 
-  // api wordt opgehaald van The one api
-  // async function main() {
-  //   try {
-  //     let responseQuotes = await fetch("https://the-one-api.dev/v2/quote", {
-  //       headers: headers,
-  //     });
-  //     let responseCharacters = await fetch(
-  //       "https://the-one-api.dev/v2/character",
-  //       { headers: headers }
-  //     );
-  //     let responseMovies = await fetch("https://the-one-api.dev/v2/movie", {
-  //       headers: headers,
-  //     });
-
-  //     let quotesData = await responseQuotes.json();
-  //     let charactersData = await responseCharacters.json();
-  //     let movieData = await responseMovies.json();
-  //     quotes.push(...quotesData.docs);
-  //     characters.push(...charactersData.docs);
-  //     movies.push(...movieData.docs);
-  //     movies = [...movies.slice(5)];
-  //     let geldigeMovieIds = movies.map((m) => m._id);
-  //     quotes = quotes.filter((q) => geldigeMovieIds.includes(q.movie));
-  //     let geldigeCharacterIds = quotes.map((q) => q.character);
-  //     characters = characters.filter((c) =>
-  //       geldigeCharacterIds.includes(c._id)
-  //     );
-  //     console.log("Quotes geladen:", quotes.length);
-  //     console.log("Characters geladen:", characters.length);
-  //     console.log("Movies zijn geladen:", movies.length);
-  //     console.log("Quotes en characters geladen!");
-  //     startButton.disabled = false;
-  //   } catch (error) {
-  //     console.log("Fout bij ophalen van data:", error);
-  //   }
-  // }
   // herstart knop voor na de quiz
   restartButton.addEventListener("click", function () {
     nextButton.style.display = "block";
     laadVraag();
   });
   // main();
-});
+  feedbackOverlay.addEventListener("click", closeFeedbackPopup);
+  closeFeedback.addEventListener("click", closeFeedbackPopup);
+  
+  likeIcon.addEventListener("click", () => {
+    selectedFeedback = "like";
+    likeIcon.style.color = "green";
+    dislikeIcon.style.color = "";
+  });
+  
+  dislikeIcon.addEventListener("click", () => {
+    selectedFeedback = "dislike";
+    dislikeIcon.style.color = "red";
+    likeIcon.style.color = "";
+  });
+  
+  sendFeedback.addEventListener("click", () => {
+    const reason = feedbackReason.value.trim();
+    if (!selectedFeedback || reason === "") {
+      feedbackError.textContent = "Kies een reactie en geef een reden op.";
+      feedbackError.style.display = "block";
+      return;
+    }
+  
+    feedbackError.textContent = "";
+    feedbackError.style.display = "none";
+    console.log("Feedback:", selectedFeedback, "Reden:", reason);
+    closeFeedbackPopup();
+  });
+    
+  function closeFeedbackPopup() {
+    feedbackPopup.style.display = "none";
+    feedbackOverlay.style.display = "none";
+    selectedFeedback = null;
+    likeIcon.style.color = "";
+    dislikeIcon.style.color = "";
+    document.getElementById("feedbackReason").value = "";
+  }
+  
+    // main();
+  });
+  
+

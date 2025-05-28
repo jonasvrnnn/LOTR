@@ -28,8 +28,15 @@
       
       <section id="quizContainer" style="display: none;">
         <header>
-          <h2 id="quote"></h2>
+            <h2 id="quote">
+                <ion-icon id="feedbackIcon" name="chatbubble-ellipses-outline" style="font-size: 28px; cursor: pointer; margin-left: 10px;" tabindex="0" role="button"></ion-icon>
+              </h2>
         </header>
+            <div id="columnTitles">
+            <div class="col-title">Film</div>
+            <div class="col-title">Character</div>
+            </div>
+                      
         <div id="buttons">
           <button class="btn een"></button>
           <button class="btn twee"></button>
@@ -38,15 +45,20 @@
           <button class="btn een"></button>
           <button class="btn twee"></button>
         </div>
-        <button id="submitAnswer" class="next">Volgende</button>
+        <button id="submitAnswer" class="next"></button>
         <section id="motivationalMessage" style="margin-top: 20px;"></section>
       </section>
     <section id="controlButtons" style="display: none; margin-top: 20px;">
-        <button id="exitButton">Verlaten</button>
-        <button id="restartButton">Herstart</button>
-    </section>
+        <button id="exitButton">
+            <ion-icon name="exit-outline"></ion-icon>
+          </button>
+                  <button id="restartButton">
+            <ion-icon name="reload-outline"></ion-icon>
+          </button>
+              </section>
 
     <audio id="lotrAudio" src="/audio/Lord of the Rings   Sound of The Shire.mp3" autoplay loop></audio>
+    <div id="popupBackground" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 98;"></div>
 
     <article id="popup" style="display: none;">
         <p id="popupMessage">Weet je zeker dat je de quiz wilt verlaten?</p>
@@ -54,7 +66,29 @@
         <button id="cancelButton">Nee</button>
     </article>
 
-    <div id="popupBackground" style="display: none;"></div>
+
+<!-- Feedback popup -->
+<div id="feedbackOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 99;"></div>
+
+<div id="feedbackPopup" class="popup-box" style="display: none;">
+  <div class="popup-content">
+    <h3>Wat vind je van deze quote?</h3>
+    <div class="feedback-icons">
+      <ion-icon id="likeIcon" name="thumbs-up-sharp"></ion-icon>
+      <ion-icon id="dislikeIcon" name="thumbs-down-sharp"></ion-icon>
+    </div>
+    <textarea id="feedbackReason" placeholder="Waarom?"></textarea>
+    <p id="feedbackError" style="color: red; display: none; margin-top: 10px;"></p>
+    <div class="popup-buttons">
+        <button id="closeFeedback">Annuleren</button>
+      <button id="sendFeedback">Verzenden</button>
+    </div>
+  </div>
+</div>
+      
+    <!--script iconen-->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
