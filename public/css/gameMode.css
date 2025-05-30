@@ -127,9 +127,9 @@ h1 {
   display: flex;
   flex-direction: column;
   margin: auto;
-  gap: 12px; /* ruimte tussen de knoppen */
-  max-width: 200px; /* optioneel, om breedte te limiteren */
-  margin-top: 20px; /* optioneel, wat ruimte boven deze knoppen */
+  gap: 12px; 
+  max-width: 200px; 
+  margin-top: 20px; 
 }
 
 @keyframes mistMove {

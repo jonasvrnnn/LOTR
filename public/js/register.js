@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const registerButton = document.querySelector(".login-button");
   const form = document.getElementById("registerForm");
 
-  // Maak een foutmeldingselement aan onder confirmPassword (of selecteer het als het al bestaat)
   let errorDiv = document.getElementById("password-error");
   if (!errorDiv) {
     errorDiv = document.createElement("div");
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmPassword.parentNode.appendChild(errorDiv);
   }
 
-  // Start met knop uitgeschakeld
   registerButton.disabled = true;
 
   function validatePasswords() {
@@ -35,11 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Validatie pas nadat gebruiker iets heeft ingevuld (niet direct bij laden)
+  
   password.addEventListener("input", validatePasswords);
   confirmPassword.addEventListener("input", validatePasswords);
 
-  // Extra: pas foutkleuren toe na submit-poging
+
   form.addEventListener("submit", (e) => {
     validatePasswords();
 

@@ -133,29 +133,29 @@ p a:hover {
   color: black;
 }
 
-/* Voor loginformulier – iets minder ruimte tussen velden */
+
 .login-form .form-group {
   margin-bottom: 1rem;
 }
 
-/* Voor registerformulier – meer ruimte tussen de 3 velden */
+
 .register-form .form-group {
   margin-bottom: 3rem;
 }
 
-/* Rode rand alleen zichtbaar als input-error wordt toegevoegd */
+
 .input-error {
   border: 2px solid red !important;
   outline: none;
   box-shadow: 0 0 5px red;
 }
-/* Nieuwe velden in registerformulier stijl toevoegen */
+
 
 .register-form .form-group {
-  margin-bottom: 3rem; /* al aanwezig, dus alle velden krijgen goede ruimte */
+  margin-bottom: 3rem; 
 }
 
-/* Stijl voor nieuwe inputs en selects (email, dateOfBirth, country, gender, displayName, phoneNumber) */
+
 #email,
 #dateOfBirth,
 #country,
@@ -170,17 +170,17 @@ p a:hover {
   background: rgba(255, 255, 255, 0.1);
   color: white;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  appearance: none; /* vooral voor select: eigen stijl */
+  appearance: none; 
 }
 
-/* Placeholder kleur voor tekstvelden */
+
 #email::placeholder,
 #displayName::placeholder,
 #phoneNumber::placeholder {
   color: #ccc;
 }
 
-/* Focus states */
+
 #email:focus,
 #dateOfBirth:focus,
 #country:focus,
@@ -191,7 +191,7 @@ p a:hover {
   outline: none;
 }
 
-/* Select pijltje beter zichtbaar op donker */
+
 select {
   background-image: linear-gradient(45deg, transparent 50%, white 50%),
     linear-gradient(135deg, white 50%, transparent 50%),
@@ -203,14 +203,14 @@ select {
   cursor: pointer;
 }
 
-/* Rode rand en schaduw bij foutmelding */
+
 .input-error {
   border: 2px solid red !important;
   outline: none;
   box-shadow: 0 0 5px red;
 }
 
-/* Optionele velden label iets lichter */
+
 label[for="gender"],
 label[for="displayName"],
 label[for="phoneNumber"] {
@@ -227,7 +227,7 @@ select {
   font-size: 1rem;
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
-  appearance: none; /* Verwijder standaard browser-stijl */
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-caret-down-fill' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658A.5.5 0 0 1 2.89 5h10.22a.5.5 0 0 1 .39.812l-4.796 5.482a.5.5 0 0 1-.758 0z'/%3E%3C/svg%3E");
@@ -246,6 +246,6 @@ select {
 }
 
 select option {
-  background-color: white; /* Donkere achtergrond voor dropdownitems */
-  color: black; /* Witte tekst zodat je het kunt lezen */
+  background-color: white; 
+  color: black; 
 }

@@ -26,7 +26,6 @@ function passwordFunction() {
   }
 }
 
-//submitten bij lege gebruikersnaam en ww
 const buttonLogin = document.getElementById("login");
 buttonLogin.addEventListener("click", emptyInput);
 function emptyInput(e) {
@@ -35,7 +34,3 @@ function emptyInput(e) {
   passwordFunction();
 }
 
-/*
-border rood maken als het vakje leeg blijft
-nmbs
-*/
