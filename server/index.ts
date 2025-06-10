@@ -1,13 +1,15 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import session from "./session";
+import dotenv from "dotenv";
+dotenv.config();
 import ejs from "ejs";
 import { Db } from "mongodb";
 import { loadGameData, requireLogin } from "./functions";
 import { connectToDB, closeDB } from "./db";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 let db: Db;
 
 app.use(express.urlencoded({ extended: true }));
